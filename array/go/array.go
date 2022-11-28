@@ -1,6 +1,10 @@
 package array
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
 
 var (
 	OutOfRange = errors.New("out of index range")
@@ -65,7 +69,6 @@ func (a *Array[T]) Append(v T) error {
 	return a.Insert(a.len, v)
 }
 
-
 func (a *Array[T]) Pop(index uint) (T, error) {
 	if a.isIndexOutOfRange(index) {
 		var v T
@@ -83,4 +86,13 @@ func (a *Array[T]) Pop(index uint) (T, error) {
 func (a *Array[T]) Delete(index uint) error {
 	_, err := a.Pop(index)
 	return err
+}
+
+// 方便打印
+func (a *Array[T]) String() string {
+	l := make([]string, a.len, a.len)
+	for i := uint(0); i < a.len; i++ {
+		l[i] = fmt.Sprintf("%v", a.data[i])
+	}
+	return fmt.Sprintf("[%s]", strings.Join(l, ","))
 }
