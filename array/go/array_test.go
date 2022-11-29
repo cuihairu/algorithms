@@ -53,6 +53,7 @@ func TestFind(t *testing.T) {
 
 func TestPop(t *testing.T) {
 	a := NewArray[int](10)
+	a.Append(1)
 	v, err := a.Pop(0)
 	if err != nil {
 		t.FailNow()

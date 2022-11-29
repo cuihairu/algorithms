@@ -1,3 +1,6 @@
 go 1.19
 
-use ./array/go
+use (
+	./array/go
+	./sorts/go
+)
