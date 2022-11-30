@@ -5,32 +5,32 @@ import (
 )
 
 func merge[T constraints.Ordered](array []T, start int, mid int, end int) {
-	tmpArray := make([]T, end-start+1)
+	tmpArr := make([]T, end-start+1)
 	i := start
 	j := mid + 1
 	k := 0
 	for ; i <= mid && j <= end; k++ {
 		if array[i] <= array[j] {
-			tmpArray[k] = array[i]
+			tmpArr[k] = array[i]
 		} else {
-			tmpArray[k] = array[j]
+			tmpArr[k] = array[j]
 			j++
 		}
 	}
 	for ; i <= mid; i++ {
-		tmpArray[k] = array[i]
+		tmpArr[k] = array[i]
 		k++
 	}
-	copy(array[start:end+1], tmpArray)
+	copy(array[start:end+1], tmpArr)
 }
 
-func mergeSort[T constraints.Ordered](array []T, start int, end int) {
+func mergeSort[T constraints.Ordered](arr []T, start int, end int) {
 	if start >= end {
 		return
 	}
 	mid := (start + end) / 2
-	mergeSort(array, start, mid)
-	mergeSort(array, mid+1, end)
+	mergeSort(arr, start, mid)
+	mergeSort(arr, mid+1, end)
 }
 
 func MergeSort[T constraints.Ordered](array []T) {

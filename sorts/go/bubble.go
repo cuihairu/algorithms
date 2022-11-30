@@ -9,8 +9,8 @@ import (
 @param array 代表数组
 https://visualgo.net/zh/sorting?slide=1-3
 */
-func BubbleSort[T constraints.Ordered](array []T) {
-	n := len(array)
+func BubbleSort[T constraints.Ordered](arr []T) {
+	n := len(arr)
 	if n <= 1 {
 		return
 	}
@@ -19,8 +19,8 @@ func BubbleSort[T constraints.Ordered](array []T) {
 		// 提前退出标志
 		swap := false
 		for j := 0; j < n-i-1; j++ {
-			if array[j] > array[j+1] {
-				array[j], array[j+1] = array[j+1], array[j]
+			if arr[j] > arr[j+1] {
+				arr[j], arr[j+1] = arr[j+1], arr[j]
 				swap = true
 			}
 		}

@@ -4,21 +4,21 @@ import "golang.org/x/exp/constraints"
 
 /*
 选择排序
-@param array 数组
+@param arr 数组
 */
-func SelectionSort[T constraints.Ordered](array []T) {
-	n := len(array)
+func SelectionSort[T constraints.Ordered](arr []T) {
+	n := len(arr)
 	if n <= 1 {
 		return
 	}
 	for i := 0; i < n; i++ {
 		minIndex := i
 		for j := i + 1; j < n; j++ {
-			if array[j] < array[minIndex] {
+			if arr[j] < arr[minIndex] {
 				minIndex = j
 			}
 		}
 		// 交换
-		array[i], array[minIndex] = array[minIndex], array[i]
+		arr[i], arr[minIndex] = arr[minIndex], arr[i]
 	}
 }
