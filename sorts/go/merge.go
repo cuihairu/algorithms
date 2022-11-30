@@ -5,7 +5,23 @@ import (
 )
 
 func merge[T constraints.Ordered](array []T, start int, mid int, end int) {
-
+	tmpArray := make([]T, end-start+1)
+	i := start
+	j := mid + 1
+	k := 0
+	for ; i <= mid && j <= end; k++ {
+		if array[i] <= array[j] {
+			tmpArray[k] = array[i]
+		} else {
+			tmpArray[k] = array[j]
+			j++
+		}
+	}
+	for ; i <= mid; i++ {
+		tmpArray[k] = array[i]
+		k++
+	}
+	copy(array[start:end+1], tmpArray)
 }
 
 func mergeSort[T constraints.Ordered](array []T, start int, end int) {

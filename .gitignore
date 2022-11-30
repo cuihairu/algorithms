@@ -20,3 +20,9 @@
 
 # vscode
 .vscode/
+
+# docs
+node_modules/
+docs/.vuepress/.cache/
+docs/.vuepress/.temp/
+docs/.vuepress/dist/
