@@ -6,6 +6,7 @@ import (
 )
 
 type ListNode struct {
+	RWmtux
 	next  *ListNode
 	value any
 }
@@ -35,5 +36,18 @@ func (l *LinkedList) Reverse() {
 	if l.head == nil || l.head.next == nil || l.head.next.next == nil {
 		return
 	}
+	var pre *ListNode
+	cur := l.head.next
+	for cur != nil {
+		tmp := cur.next
+		cur.next = pre
+		pre = cur
+		cur = tmp
+	}
+	l.head.next = pre
+}
 
+// 判断单链表是否有环
+func (l *LinkedList) HasCycle() bool {
+	return false
 }
