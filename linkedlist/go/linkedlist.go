@@ -48,7 +48,7 @@ func (this *LinkedList) AddFirst(element any) {
 
 func (this *LinkedList) GetLast() any {
 	this.RLock()
-	defer this.Unlock()
+	defer this.RUnlock()
 	if this.isEmpty() {
 		return nil
 	}
@@ -97,7 +97,7 @@ func (this *LinkedList) isEmpty() bool {
 // 是否是空链表
 func (this *LinkedList) IsEmpty() bool {
 	this.RLock()
-	defer this.Unlock()
+	defer this.RUnlock()
 	return this.isEmpty()
 }
 
@@ -168,8 +168,22 @@ func (this *LinkedList) Contains(element any) bool {
 	return false
 }
 
+// 根据index插入元素
 func (this *LinkedList) Insert(index int, element any) {
-
+	this.RLock()
+	defer this.RUnlock()
+	if index <= 0 {
+		return
+	}
+	pre := this.head
+	for i := 1; i < index && pre.next != nil; i++ {
+		pre = pre.next
+	}
+	node := &ListNode{
+		next:    pre.next,
+		element: element,
+	}
+	pre.next = node
 }
 
 // 判断单链表是否有环
@@ -193,11 +207,13 @@ func (this *LinkedList) HasCycle() bool {
 
 // 获取链表的长度
 func (this *LinkedList) Size() int {
+	this.RLock()
+	defer this.RUnlock()
 	if this.isEmpty() {
 		return 0
 	}
 	num := 0
-	next := this.head
+	next := this.head.next
 	for next != nil {
 		num++
 		next = next.next
@@ -207,11 +223,25 @@ func (this *LinkedList) Size() int {
 
 // 根据索引删除节点
 func (this *LinkedList) DeleteByIndex(index int) {
-
+	this.Lock()
+	defer this.Unlock()
+	if index <= 0 || this.isEmpty() {
+		return
+	}
+	pre := this.head
+	for i := 1; i < index && pre.next != nil; i++ {
+		pre = pre.next
+	}
+	if pre.next == nil {
+		return
+	}
+	pre.next = pre.next.next
 }
 
 // 删除倒数的第N个节点
 func (this *LinkedList) DeleteByBottomIndex(index int) {
+	this.Lock()
+	defer this.Unlock()
 	if index <= 0 || this.isEmpty() {
 		return
 	}
@@ -232,6 +262,8 @@ func (this *LinkedList) DeleteByBottomIndex(index int) {
 
 // 获取中间节点
 func (this *LinkedList) FindMiddleNode() *ListNode {
+	this.RLock()
+	defer this.RUnlock()
 	if this.isEmpty() {
 		return nil
 	}
