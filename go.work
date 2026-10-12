@@ -9,4 +9,5 @@ use (
 	./tree/go
 	./heap/go
 	./hash/go
+	./graph/go
 )
