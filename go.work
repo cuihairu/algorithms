@@ -5,4 +5,5 @@ use (
 	./sorts/go
 	./stack/go
 	./linkedlist/go
+	./queue/go
 )
