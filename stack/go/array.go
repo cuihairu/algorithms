@@ -25,7 +25,7 @@ func (this *ArrayStack) IsEmpty() bool {
 }
 
 func (this *ArrayStack) Size() int {
-	return len(this.data)
+	return this.top + 1
 }
 
 func (this *ArrayStack) Push(v any) {
@@ -45,7 +45,9 @@ func (this *ArrayStack) Pop() any {
 	if this.IsEmpty() {
 		return nil
 	}
-	return this.data[this.top]
+	v := this.data[this.top]
+	this.top--
+	return v
 }
 
 func (this *ArrayStack) Top() any {
@@ -63,8 +65,8 @@ func (this *ArrayStack) String() string {
 	if this.IsEmpty() {
 		return "[]"
 	}
-	ss := make([]string, 0, this.top)
-	for i := 0; i < this.top; i++ {
+	ss := make([]string, 0, this.top+1)
+	for i := 0; i <= this.top; i++ {
 		ss = append(ss, fmt.Sprintf("%v", this.data[i]))
 	}
 	return fmt.Sprintf("[%s]", strings.Join(ss, "<"))
