@@ -7,4 +7,5 @@ use (
 	./linkedlist/go
 	./queue/go
 	./tree/go
+	./heap/go
 )
