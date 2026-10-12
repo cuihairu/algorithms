@@ -82,6 +82,7 @@ func (this *LinkedList) String() string {
 	cur := this.head.next
 	for cur != nil {
 		ll = append(ll, fmt.Sprintf("%+v", cur.element))
+		cur = cur.next
 	}
 	return fmt.Sprintf("[ %s ]", strings.Join(ll, "->"))
 }
@@ -159,7 +160,7 @@ func (this *LinkedList) Contains(element any) bool {
 		return false
 	}
 	next := this.head.next
-	for next.next != nil {
+	for next != nil {
 		if next.element == element {
 			return true
 		}
@@ -170,8 +171,8 @@ func (this *LinkedList) Contains(element any) bool {
 
 // 根据index插入元素
 func (this *LinkedList) Insert(index int, element any) {
-	this.RLock()
-	defer this.RUnlock()
+	this.Lock()
+	defer this.Unlock()
 	if index <= 0 {
 		return
 	}
@@ -195,7 +196,7 @@ func (this *LinkedList) HasCycle() bool {
 	}
 	slow := this.head
 	fast := this.head
-	for slow != nil && fast.next != nil {
+	for fast != nil && fast.next != nil {
 		slow = slow.next
 		fast = fast.next.next
 		if slow == fast {
@@ -267,11 +268,8 @@ func (this *LinkedList) FindMiddleNode() *ListNode {
 	if this.isEmpty() {
 		return nil
 	}
-	if this.head.next.next == nil {
-		return this.head.next
-	}
-	slow, fast := this.head, this.head
-	for slow != nil && fast != nil {
+	slow, fast := this.head.next, this.head.next
+	for fast.next != nil && fast.next.next != nil {
 		slow = slow.next
 		fast = fast.next.next
 	}
