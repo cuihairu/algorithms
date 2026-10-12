@@ -11,8 +11,8 @@
 
 ## 二、部分实现（代码在，但有 bug 或测试缺失）
 
-- [ ] sorts/go 桶排序 TestBucketSort panic：bucket.go:32 桶序号误用 nBuckets 整除（应为桶宽），全负输入 [-10..0] 时 index 越界。历史上 14d87d4 曾"fix bucket sort"但仍红。
-  验收：sorts 模块 `go test ./...` 全绿，含全负用例。期次：C1（本轮修复）
+- [x] sorts/go 红测试修复（C1 完成）：bucket.go 桶序号误用 nBuckets 整除致全负输入越界（历史 14d87d4 曾修但未修对），且末尾回拷只扫 n 个桶（nBuckets 可大于 n）；counting.go 未按 min 偏移索引致负数越界（此前被 bucket panic 掩盖）。补 TestBucketSortSparse 稀疏两元素回归用例。
+  验收达成：sorts 模块 `go test ./...` 7 个测试全绿。证据：本条修复 commit
 - [ ] go.work 只收录 array/sorts，stack、linkedlist 两 module 游离在工作区外，模块内 `go test ./...` 报 "does not contain modules listed in go.work"
   验收：go.work 收录全部 4 个 module，四个模块内测试命令均可执行。期次：C2
 - [ ] stack/go ArrayStack 全部方法已实现（Push/Pop/Top/Size/Flush/IsEmpty/String）但零测试 —— 证据 dc24bd1

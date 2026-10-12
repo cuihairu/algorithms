@@ -25,16 +25,17 @@ func BucketSort[T constraints.Integer](arr []T) {
 	}
 	min, max := getMinAndMax(arr)
 	nBuckets := int(max-min)/n + 1
+	bucketSize := int(max-min)/nBuckets + 1
 	buckets := make([][]T, nBuckets) // 二维切片
 
 	for i := 0; i < n; i++ {
 		v := arr[i]
-		index := int(v-min) / nBuckets             // 桶序号 bug
+		index := int(v-min) / bucketSize           // 桶序号按桶宽计算
 		buckets[index] = append(buckets[index], v) // 加入对应的桶中
 	}
 
 	tmpPos := 0 // 标记数组位置
-	for i := 0; i < n; i++ {
+	for i := 0; i < nBuckets; i++ {
 		bucketLen := len(buckets[i])
 		if bucketLen > 0 {
 			QuickSort(buckets[i])
