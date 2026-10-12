@@ -8,4 +8,5 @@ use (
 	./queue/go
 	./tree/go
 	./heap/go
+	./hash/go
 )
