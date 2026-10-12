@@ -13,12 +13,12 @@
 
 - [x] sorts/go 红测试修复（C1 完成）：bucket.go 桶序号误用 nBuckets 整除致全负输入越界（历史 14d87d4 曾修但未修对），且末尾回拷只扫 n 个桶（nBuckets 可大于 n）；counting.go 未按 min 偏移索引致负数越界（此前被 bucket panic 掩盖）。补 TestBucketSortSparse 稀疏两元素回归用例。
   验收达成：sorts 模块 `go test ./...` 7 个测试全绿。证据：本条修复 commit
-- [ ] go.work 只收录 array/sorts，stack、linkedlist 两 module 游离在工作区外，模块内 `go test ./...` 报 "does not contain modules listed in go.work"
-  验收：go.work 收录全部 4 个 module，四个模块内测试命令均可执行。期次：C2
-- [ ] stack/go ArrayStack 全部方法已实现（Push/Pop/Top/Size/Flush/IsEmpty/String）但零测试 —— 证据 dc24bd1
-  验收：补齐接口各方法用例并全绿。期次：C2
-- [ ] stack/go LinkedListStack 仅 NewLinkedListStack + IsEmpty，Push/Pop/Top/Size/Flush 未实现
-  验收：实现 Stack 接口全部方法，测试全绿。期次：C2
+- [x] go.work 收录全部 4 个 module（C2 完成）。顺带最小修复 linkedlist 空壳测试的编译错误（declared and not used），使四模块测试命令均可执行。
+  验收达成：array/sorts/stack/linkedlist 四模块 `go test ./...` 均可执行。证据 3c39425
+- [x] stack/go ArrayStack 补齐测试（C2 完成）。测试先红后修：Pop 原先不弹栈（等同 Top）、Flush 后复用 Size()=len(data) 失真、String 漏栈顶元素，三处全修，加编译期接口守卫 `var _ Stack`。
+  验收达成：stack 模块 ArrayStack 3 测试全绿。证据 7e2f349
+- [x] stack/go LinkedListStack 补 Push/Pop/Top/Size/Flush 五方法（C2 完成）。测试先行（编译红确认缺方法），头插法实现，空栈/ LIFO /Flush 复用三组用例 + 接口守卫。
+  验收达成：stack 模块 6 测试全绿。证据 040b66c
 - [ ] linkedlist/go linkedlist_test.go 空壳（TestLinkedList 无断言）
   验收：覆盖 AddFirst/AddLast/RemoveFirst/RemoveLast/Insert/Reverse/HasCycle/FindMiddleNode。期次：C3
 
