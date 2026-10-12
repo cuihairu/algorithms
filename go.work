@@ -6,4 +6,5 @@ use (
 	./stack/go
 	./linkedlist/go
 	./queue/go
+	./tree/go
 )
