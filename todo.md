@@ -36,5 +36,7 @@
 
 ## 四、后续可选（新账，非本轮验收）
 
-- [ ] docs/notes/ 为 queue/tree/heap/hash/graph 五个新模块补笔记
-- [ ] BST 增加高度/平衡检查；graph 增加 BFS 最短路（边权 1）
+- [x] docs/notes/ 为 queue/tree/heap/hash/graph 五个新模块补笔记（P1014A 完成）：五篇笔记按既有风格落地（接口/API 表、复杂度、测试状态），sidebar structure 自动收录无需改配置；notes/README.md 索引表补五行并更正「九个模块」表述。
+  验收达成：`npm run docs:build` 成功，18→23 页全渲染。证据 b950a7f
+- [x] BST 增加高度/平衡检查；graph 增加 BFS 最短路（边权 1）（P1014A 完成）：测试先行（编译红确认缺方法）后实现。tree 加 `Height()`（空树 0）与 `IsBalanced()`（每节点左右子树高度差 ≤1），共用 `checkBalance` 单趟同时算高与平衡，O(n) 无重算；graph 加 `ShortestPath(from,to)`，BFS 记父节点首次命中即回溯，含两端点，起点即终点返回单点，顶点缺失/不可达返回 nil。
+  验收达成：tree 8 测试、graph 9 测试全绿（- count=1），全仓 9 模块 `go test ./...` 全绿；两篇笔记 API 表已同步。证据 1eb38b0
