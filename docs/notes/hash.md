@@ -1,16 +1,18 @@
 ---
-title: 哈希表
+title: Hash Map
 icon: key
 ---
 
-# 哈希表
+# Hash Map
 
-`hash/go` 模块实现字符串键哈希表，链地址法解决冲突。模块目录名 `hash` 是为避让标准库，Go module 名为 `hashmap`。
+> **English** | [中文](hash.zh.md)
 
-## 实现位置
+`hash/go` implements a string-key hash map that resolves collisions by chaining. The directory is named `hash` to avoid clashing with the standard library; the Go module is named `hashmap`.
 
-- 源码：`hash/go/hashmap.go`
-- 测试：`hash/go/hashmap_test.go`
+## Location
+
+- Source: `hash/go/hashmap.go`
+- Tests: `hash/go/hashmap_test.go`
 
 ## API
 
@@ -18,30 +20,30 @@ icon: key
 func NewHashMap() *HashMap
 func (this *HashMap) Size() int
 func (this *HashMap) IsEmpty() bool
-func (this *HashMap) Put(key string, value any) (old any, existed bool) // 已存在覆盖并返回旧值
+func (this *HashMap) Put(key string, value any) (old any, existed bool) // overwrites an existing key and returns the old value
 func (this *HashMap) Get(key string) (any, bool)
 func (this *HashMap) Contains(key string) bool
 func (this *HashMap) Delete(key string) (old any, existed bool)
-func (this *HashMap) Keys() []string // 顺序不定
+func (this *HashMap) Keys() []string // order not guaranteed
 ```
 
-## 实现要点
+## Implementation notes
 
-- 哈希函数：FNV-1a 32 位（偏移量 2166136261，质数 16777619），桶下标 `h & (len(buckets)-1)`，桶数为 2 的幂（初始 16）。
-- **负载因子超过 1.0 时倍增扩容**：全部条目重哈希到新桶（`resize` 期间借 `size` 重新计数）。
-- 每个桶是 `[]entry` 线性扫描；`Put` 命中已有键只覆盖不扩容计数，`Delete` 用切片拼接摘除。
+- Hash function: FNV-1a 32-bit (offset 2166136261, prime 16777619); the bucket index is `h & (len(buckets)-1)` and the bucket count is a power of two (initially 16).
+- **Doubles in size when the load factor exceeds 1.0**: all entries are rehashed into the new buckets (`size` is recounted during `resize`).
+- Each bucket is a `[]entry` scanned linearly; a hit on an existing key in `Put` only overwrites, without growing the count; `Delete` removes by slicing.
 
-## 复杂度
+## Complexity
 
-| 操作 | 平均 | 最坏（全碰撞） |
+| Operation | Average | Worst (all collide) |
 | --- | --- | --- |
 | Put / Get / Delete / Contains | O(1) | O(n) |
 | Keys | O(n) | O(n) |
 
-## 测试状态
+## Test status
 
 ```bash
 cd hash/go && go test ./...
 ```
 
-当前 5 个测试全部通过（空表 / 基本读写 / 覆盖返回旧值 / 删除 / 扩容后仍可读写）。
+All 5 tests pass (empty map / basic read-write / overwrite returns old value / delete / still readable after resize).

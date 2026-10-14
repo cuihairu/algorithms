@@ -1,18 +1,20 @@
 ---
-title: 队列
+title: Queue
 icon: stream
 ---
 
-# 队列
+# Queue
 
-`queue/go` 模块定义统一 `Queue` 接口，提供数组与链表两种实现，先进先出（FIFO）。
+> **English** | [中文](queue.zh.md)
 
-## 实现位置
+`queue/go` defines a unified `Queue` interface and provides array and linked list implementations, first in first out (FIFO).
 
-- 源码：`queue/go/queue.go`（接口）、`queue/go/array.go`、`queue/go/linkedlist.go`
-- 测试：`queue/go/array_test.go`、`queue/go/linkedlist_test.go`
+## Location
 
-## 接口
+- Source: `queue/go/queue.go` (interface), `queue/go/array.go`, `queue/go/linkedlist.go`
+- Tests: `queue/go/array_test.go`, `queue/go/linkedlist_test.go`
+
+## Interface
 
 ```go
 type Queue interface {
@@ -25,25 +27,25 @@ type Queue interface {
 }
 ```
 
-## 实现
+## Implementations
 
-| 实现 | 结构 | 特点 |
+| Implementation | Structure | Notes |
 | --- | --- | --- |
-| `ArrayQueue` | 切片 + `head` 队首游标 | `Dequeue` 只右移游标不清元素；队列**清空时**才回收底层数组并归零游标；`String()` 输出 `[a<b<c]`（头→尾） |
-| `LinkedListQueue` | 单链表 head/tail 双指针 | 入队走 tail、出队走 head，尾节点自动维护 |
+| `ArrayQueue` | slice + `head` front cursor | `Dequeue` only moves the cursor, never clears elements; the underlying slice is reclaimed and the cursor reset **only when the queue is emptied**; `String()` outputs `[a<b<c]` (front → tail) |
+| `LinkedListQueue` | singly linked list with head/tail pointers | enqueue via tail, dequeue via head, tail maintained automatically |
 
-两种实现空队 `Dequeue`/`Front` 均返回 `nil`，不 panic。注意 `ArrayQueue` 在队列始终非空时，底层切片会随 `Enqueue` 持续增长（只在清空时回收）。
+Both implementations return `nil` for `Dequeue`/`Front` on an empty queue, no panic. Note that while the `ArrayQueue` is never empty, its underlying slice keeps growing with `Enqueue` (it is reclaimed only when emptied).
 
-## 复杂度
+## Complexity
 
-| 操作 | ArrayQueue | LinkedListQueue |
+| Operation | ArrayQueue | LinkedListQueue |
 | --- | --- | --- |
 | Enqueue / Dequeue / Front | O(1) | O(1) |
 
-## 测试状态
+## Test status
 
 ```bash
 cd queue/go && go test ./...
 ```
 
-当前 6 个测试全部通过（空队 / FIFO 序 / Flush 复用 × 两种实现）。
+All 6 tests pass (empty queue / FIFO order / Flush reuse × two implementations).

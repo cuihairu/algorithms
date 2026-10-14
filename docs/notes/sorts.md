@@ -1,38 +1,40 @@
 ---
-title: 排序算法
+title: Sorting
 icon: order
 ---
 
-# 排序算法
+# Sorting
 
-`sorts/go` 模块实现 7 种排序，全部为泛型（`golang.org/x/exp/constraints`）。
+> **English** | [中文](sorts.zh.md)
 
-## 实现位置
+`sorts/go` implements 7 sorting algorithms, all generic (`golang.org/x/exp/constraints`).
 
-- 源码：`sorts/go/*.go`
-- 测试：`sorts/go/*_test.go`
+## Location
 
-## 一览
+- Source: `sorts/go/*.go`
+- Tests: `sorts/go/*_test.go`
 
-| 算法 | 函数 | 平均复杂度 | 稳定性 | 备注 |
+## Overview
+
+| Algorithm | Function | Average complexity | Stable | Notes |
 | --- | --- | --- | --- | --- |
-| 冒泡 | `BubbleSort[T]` | O(n²) | 稳定 | |
-| 插入 | `InsertionSort[T]` | O(n²) | 稳定 | |
-| 选择 | `SelectionSort[T]` | O(n²) | 不稳定 | |
-| 归并 | `MergeSort[T]` | O(n log n) | 稳定 | |
-| 快排 | `QuickSort[T]` | O(n log n) | 不稳定 | 桶排序内部复用 |
-| 计数 | `CountingSort[T]` | O(n+k) | 稳定 | 支持负数（按 min 偏移） |
-| 桶 | `BucketSort[T]` | O(n+k) | 稳定 | 桶内快排 |
+| Bubble | `BubbleSort[T]` | O(n²) | stable | |
+| Insertion | `InsertionSort[T]` | O(n²) | stable | |
+| Selection | `SelectionSort[T]` | O(n²) | unstable | |
+| Merge | `MergeSort[T]` | O(n log n) | stable | |
+| Quick | `QuickSort[T]` | O(n log n) | unstable | reused inside bucket sort |
+| Counting | `CountingSort[T]` | O(n+k) | stable | supports negatives (indexed by min offset) |
+| Bucket | `BucketSort[T]` | O(n+k) | stable | quick sort inside buckets |
 
-## 历史坑位（已修复，回归用例在测试里）
+## Historical pitfalls (fixed, regression cases live in tests)
 
-- **桶排序**：桶序号要用「桶宽」整除而不是「桶数」，否则全负输入（如 `[-10..0]`）时下标越界 panic；末尾回拷必须扫满 `nBuckets` 个桶（`[0,100]` 这类稀疏输入会丢元素）。
-- **计数排序**：计数数组必须按 `min` 偏移下标，否则负数直接越界（此 bug 曾被桶排序的 panic 掩盖）。
+- **Bucket sort**: the bucket index must be divided by the **bucket width**, not the **bucket count**, otherwise all-negative input (e.g. `[-10..0]`) panics on an out-of-range index; the final copy-back must scan all `nBuckets` buckets (sparse input like `[0,100]` drops elements).
+- **Counting sort**: the count array must be indexed with a `min` offset, otherwise negative numbers go out of bounds directly (this bug was masked by the bucket sort panic).
 
-## 测试状态
+## Test status
 
 ```bash
 cd sorts/go && go test ./...
 ```
 
-当前 7 个测试全部通过（含全负输入与稀疏输入用例）。
+All 7 tests pass (including all-negative and sparse input cases).

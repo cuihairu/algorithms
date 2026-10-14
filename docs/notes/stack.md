@@ -1,18 +1,20 @@
 ---
-title: 栈
+title: Stack
 icon: layer-group
 ---
 
-# 栈
+# Stack
 
-`stack/go` 模块定义统一 `Stack` 接口，提供数组与链表两种实现。
+> **English** | [中文](stack.zh.md)
 
-## 实现位置
+`stack/go` defines a unified `Stack` interface and provides array and linked list implementations.
 
-- 源码：`stack/go/stack.go`（接口）、`stack/go/array.go`、`stack/go/linkedlist.go`
-- 测试：`stack/go/array_test.go`、`stack/go/linkedlist_test.go`
+## Location
 
-## 接口
+- Source: `stack/go/stack.go` (interface), `stack/go/array.go`, `stack/go/linkedlist.go`
+- Tests: `stack/go/array_test.go`, `stack/go/linkedlist_test.go`
+
+## Interface
 
 ```go
 type Stack interface {
@@ -25,24 +27,24 @@ type Stack interface {
 }
 ```
 
-## 实现
+## Implementations
 
-| 实现 | 结构 | 特点 |
+| Implementation | Structure | Notes |
 | --- | --- | --- |
-| `ArrayStack` | 切片 + top 游标 | `Flush` 后复用底层数组；`String()` 输出 `[a<b<c]`（底→顶） |
-| `LinkedListStack` | 单链表头插 | 无扩容；节点按需分配 |
+| `ArrayStack` | slice + top cursor | `Flush` reuses the underlying array; `String()` outputs `[a<b<c]` (bottom → top) |
+| `LinkedListStack` | singly linked list, head insert | no resizing; nodes allocated on demand |
 
-两者空栈 `Pop`/`Top` 均返回 `nil`，不 panic。
+Both implementations return `nil` for `Pop`/`Top` on an empty stack, no panic.
 
-## 历史坑位（已修复，回归用例在测试里）
+## Historical pitfalls (fixed, regression cases live in tests)
 
-- **ArrayStack**：`Pop` 原先不移动 top（等同 `Top`）；`Size` 用 `len(data)` 导致 `Flush` 后复用时逻辑大小失真；`String` 漏打栈顶元素。
-- 两个实现均加了编译期接口守卫：`var _ Stack = (*ArrayStack)(nil)`。
+- **ArrayStack**: `Pop` originally did not move `top` (equivalent to `Top`); `Size` used `len(data)`, which distorted the logical size when reusing after `Flush`; `String` omitted the top element.
+- Both implementations have compile-time interface guards: `var _ Stack = (*ArrayStack)(nil)`.
 
-## 测试状态
+## Test status
 
 ```bash
 cd stack/go && go test ./...
 ```
 
-当前 6 个测试全部通过（空栈 / LIFO / Flush 复用 × 两种实现）。
+All 6 tests pass (empty stack / LIFO / Flush reuse × two implementations).

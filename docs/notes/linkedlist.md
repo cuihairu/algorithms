@@ -1,45 +1,47 @@
 ---
-title: 单链表
+title: Linked List
 icon: link
 ---
 
-# 单链表
+# Linked List
 
-`linkedlist/go` 模块实现带头哨兵节点的单链表，读写锁保护。
+> **English** | [中文](linkedlist.zh.md)
 
-## 实现位置
+`linkedlist/go` implements a singly linked list with a head sentinel node, guarded by a read-write lock.
 
-- 源码：`linkedlist/go/linkedlist.go`
-- 测试：`linkedlist/go/linkedlist_test.go`（11 个测试函数）
+## Location
 
-## 接口
+- Source: `linkedlist/go/linkedlist.go`
+- Tests: `linkedlist/go/linkedlist_test.go` (11 test functions)
 
-| 方法 | 说明 |
+## Interface
+
+| Method | Description |
 | --- | --- |
-| `AddFirst / AddLast` | 头插 / 尾插 |
-| `GetFirst / GetLast` | 读首 / 读尾 |
-| `RemoveFirst / RemoveLast` | 删首 / 删尾，空表返回 nil |
-| `Insert(index, element)` | 1 基下标插入；`index<=0` 不动作；越界等价尾插 |
-| `DeleteByIndex(index)` | 按下标删除，越界不动作 |
-| `DeleteByBottomIndex(index)` | 删倒数第 N 个（快慢指针） |
-| `Contains(element)` | 是否包含 |
-| `Reverse()` | 原地反转 |
-| `HasCycle()` | 快慢指针判环 |
-| `FindMiddleNode()` | 快慢指针取中点；偶数长度返回前一个中点 |
-| `Size / IsEmpty / String` | 常规 |
+| `AddFirst / AddLast` | head insert / tail insert |
+| `GetFirst / GetLast` | read head / read tail |
+| `RemoveFirst / RemoveLast` | remove head / remove tail, empty list returns nil |
+| `Insert(index, element)` | 1-based index insert; `index<=0` is a no-op; out of range behaves as a tail insert |
+| `DeleteByIndex(index)` | delete by index, out of range is a no-op |
+| `DeleteByBottomIndex(index)` | delete the Nth from the end (fast/slow pointers) |
+| `Contains(element)` | whether it contains the element |
+| `Reverse()` | in-place reversal |
+| `HasCycle()` | fast/slow pointer cycle detection |
+| `FindMiddleNode()` | fast/slow pointers for the middle; for even length returns the earlier middle |
+| `Size / IsEmpty / String` | routine |
 
-## 历史坑位（已修复，回归用例在测试里）
+## Historical pitfalls (fixed, regression cases live in tests)
 
-- **String**：遍历忘了 `cur = cur.next`，死循环。
-- **Contains**：循环条件 `next.next != nil` 漏判尾节点。
-- **HasCycle**：条件缺 `fast != nil`，单节点链表 `nil.next` panic。
-- **FindMiddleNode**：`fast.next.next` 未判空，偶数长度 panic。
-- **Insert**：持 `RLock` 写链表（数据竞争），已改 `Lock`，`-race` 验证通过。
+- **String**: traversal forgot `cur = cur.next`, infinite loop.
+- **Contains**: the loop condition `next.next != nil` missed the tail node.
+- **HasCycle**: the condition lacked `fast != nil`, so a single-node list panicked on `nil.next`.
+- **FindMiddleNode**: `fast.next.next` was not nil-checked, panicking on even length.
+- **Insert**: held `RLock` while writing the list (data race), now `Lock`; verified with `-race`.
 
-## 测试状态
+## Test status
 
 ```bash
 cd linkedlist/go && go test -race ./...
 ```
 
-当前 11 个测试全部通过（含手工构造的带环链表与偶数长度取中点用例）。
+All 11 tests pass (including a hand-built cyclic list and even-length middle lookup).

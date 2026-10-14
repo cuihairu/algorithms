@@ -1,16 +1,18 @@
 ---
-title: 二叉搜索树
+title: Binary Search Tree
 icon: tree
 ---
 
-# 二叉搜索树
+# Binary Search Tree
 
-`tree/go` 模块实现泛型二叉搜索树（BST），不含重复元素。
+> **English** | [中文](tree.zh.md)
 
-## 实现位置
+`tree/go` implements a generic binary search tree (BST) with no duplicate elements.
 
-- 源码：`tree/go/bst.go`
-- 测试：`tree/go/bst_test.go`
+## Location
+
+- Source: `tree/go/bst.go`
+- Tests: `tree/go/bst_test.go`
 
 ## API
 
@@ -18,36 +20,36 @@ icon: tree
 func NewBST[T constraints.Ordered]() *BST[T]
 func (this *BST[T]) Size() int
 func (this *BST[T]) IsEmpty() bool
-func (this *BST[T]) Insert(v T) bool   // 重复元素不动作并返回 false
+func (this *BST[T]) Insert(v T) bool   // duplicate is a no-op and returns false
 func (this *BST[T]) Search(v T) bool
-func (this *BST[T]) Remove(v T) bool   // 不存在返回 false
-func (this *BST[T]) Min() (T, bool)    // 空树返回 false
+func (this *BST[T]) Remove(v T) bool   // returns false if absent
+func (this *BST[T]) Min() (T, bool)    // empty tree returns false
 func (this *BST[T]) Max() (T, bool)
-func (this *BST[T]) InOrder() []T      // 返回升序切片
-func (this *BST[T]) Height() int       // 节点数树高,空树为 0
-func (this *BST[T]) IsBalanced() bool  // 每节点左右子树高度差 ≤ 1
+func (this *BST[T]) InOrder() []T      // ascending slice
+func (this *BST[T]) Height() int       // height in nodes, empty tree is 0
+func (this *BST[T]) IsBalanced() bool  // left/right subtree height diff ≤ 1 at every node
 ```
 
-## 实现要点
+## Implementation notes
 
-- 插入/删除/查询均为递归实现，返回值带「新子树根 + 是否生效」，由外层统一维护 `size`。
-- 删除分三种情况：叶子/单子直接摘除，**双子节点用右子树最小节点（后继）替换**后转去右子树删后继。
-- `InOrder` 用闭包递归中序遍历，容量按 `size` 预分配。
-- `Height` 与 `IsBalanced` 共用一次递归：`checkBalance` 单趟同时返回子树高与平衡性，O(n) 一趟出结果，避免 `Height` 在平衡判定里被反复重算。
+- Insert/remove/search are all recursive and return "new subtree root + whether it took effect", with `size` maintained uniformly by the caller.
+- Removal splits into three cases: leaf/single child are detached directly; **a node with two children is replaced by the smallest node of its right subtree (the successor)**, which is then removed from the right subtree.
+- `InOrder` walks recursively in a closure with capacity preallocated by `size`.
+- `Height` and `IsBalanced` share one pass: `checkBalance` returns both the subtree height and the balance at once, O(n) in one go, avoiding repeated recomputation of `Height`.
 
-## 复杂度
+## Complexity
 
-| 操作 | 平均 | 最坏（退化成链） |
+| Operation | Average | Worst (degenerates to a list) |
 | --- | --- | --- |
 | Insert / Search / Remove | O(log n) | O(n) |
 | Min / Max | O(h) | O(n) |
 | InOrder | O(n) | O(n) |
 | Height / IsBalanced | O(n) | O(n) |
 
-## 测试状态
+## Test status
 
 ```bash
 cd tree/go && go test ./...
 ```
 
-当前 6 个测试全部通过（空树 / 插入查重 / Min/Max/中序 / 三态删除 / 根节点三变体 / 字符串泛型）。
+All 8 tests pass (empty tree / insert dedup / Min/Max/in-order / three-case removal / root removal variants / string generics / height & balance).

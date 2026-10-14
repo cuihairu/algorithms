@@ -1,48 +1,50 @@
 ---
-title: 二叉堆
+title: Binary Heap
 icon: sort-amount-up
 ---
 
-# 二叉堆
+# Binary Heap
 
-`heap/go` 模块实现泛型最小堆，数组存储，父节点 ≤ 两个子节点。
+> **English** | [中文](heap.zh.md)
 
-## 实现位置
+`heap/go` implements a generic min-heap backed by an array; every parent node is ≤ its two children.
 
-- 源码：`heap/go/heap.go`
-- 测试：`heap/go/heap_test.go`
+## Location
+
+- Source: `heap/go/heap.go`
+- Tests: `heap/go/heap_test.go`
 
 ## API
 
 ```go
 func NewHeap[T constraints.Ordered]() *Heap[T]
-func NewHeapFrom[T constraints.Ordered](vals []T) *Heap[T] // O(n) 建堆
+func NewHeapFrom[T constraints.Ordered](vals []T) *Heap[T] // O(n) heapify
 func (this *Heap[T]) Size() int
 func (this *Heap[T]) IsEmpty() bool
-func (this *Heap[T]) Peek() (T, bool)  // 空堆返回 false
+func (this *Heap[T]) Peek() (T, bool)  // empty heap returns false
 func (this *Heap[T]) Push(v T)
-func (this *Heap[T]) Pop() (T, bool)   // 空堆返回 false
+func (this *Heap[T]) Pop() (T, bool)   // empty heap returns false
 ```
 
-## 实现要点
+## Implementation notes
 
-- 索引公式：父 `(i-1)/2`，子 `2i+1` / `2i+2`。
-- `Push` 追加到末尾后**上浮**（siftUp）；`Pop` 用末元素覆盖堆顶后**下沉**（siftDown），均只与一侧子节点比较换更小者。
-- `NewHeapFrom` 自底向上堆化：从最后一个非叶节点 `len/2-1` 逆序 `siftDown`，整体 O(n)，优于逐个 Push 的 O(n log n)。建堆时 `copy` 输入切片，不改调用方数据。
-- 出参统一 `(value, ok)`，空堆返回零值 + `false`，不 panic。
+- Index formulas: parent `(i-1)/2`, children `2i+1` / `2i+2`.
+- `Push` appends to the end and **sifts up**; `Pop` overwrites the top with the last element and **sifts down**, swapping with the smaller child.
+- `NewHeapFrom` builds bottom-up: it sifts down from the last non-leaf node `len/2-1` in reverse order, O(n) overall, better than pushing one by one (O(n log n)). It copies the input slice, so the caller's data is untouched.
+- Returns use `(value, ok)`; an empty heap returns the zero value + `false`, no panic.
 
-## 复杂度
+## Complexity
 
-| 操作 | 复杂度 |
+| Operation | Complexity |
 | --- | --- |
 | Peek | O(1) |
 | Push / Pop | O(log n) |
 | NewHeapFrom | O(n) |
 
-## 测试状态
+## Test status
 
 ```bash
 cd heap/go && go test ./...
 ```
 
-当前 6 个测试全部通过（空堆 / Push-Pop 有序 / 交错操作 / 切片建堆 / 空切片建堆 / 字符串泛型）。
+All 6 tests pass (empty heap / push-pop order / interleaved / slice heapify / empty slice heapify / string generics).
