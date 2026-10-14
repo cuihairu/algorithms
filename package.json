@@ -16,5 +16,9 @@
     "vuepress-theme-hope": "2.0.0-beta.131"
   },
   "dependencies": {
+  },
+  "overrides": {
+    "@babel/traverse": "7.23.2",
+    "dompurify": "2.4.2"
   }
 }
