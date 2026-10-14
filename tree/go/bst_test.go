@@ -162,6 +162,77 @@ func TestBSTRemoveRootVariants(t *testing.T) {
 	}
 }
 
+func TestBSTHeight(t *testing.T) {
+	b := NewBST[int]()
+	if b.Height() != 0 {
+		t.Fatalf("height of empty tree = %d, want 0", b.Height())
+	}
+
+	b.Insert(5)
+	if b.Height() != 1 {
+		t.Fatalf("height of single node = %d, want 1", b.Height())
+	}
+
+	for _, v := range []int{3, 8, 1, 4, 7, 9} {
+		b.Insert(v)
+	}
+	if b.Height() != 3 {
+		t.Fatalf("height = %d, want 3", b.Height())
+	}
+
+	// 退化成链:1-2-3-4
+	c := NewBST[int]()
+	for _, v := range []int{1, 2, 3, 4} {
+		c.Insert(v)
+	}
+	if c.Height() != 4 {
+		t.Fatalf("height of chain = %d, want 4", c.Height())
+	}
+
+	// 删空后高度归零
+	for _, v := range []int{5, 3, 8, 1, 4, 7, 9} {
+		b.Remove(v)
+	}
+	if b.Height() != 0 {
+		t.Fatalf("height after emptying = %d, want 0", b.Height())
+	}
+}
+
+func TestBSTIsBalanced(t *testing.T) {
+	// 空树与单节点均平衡
+	b := NewBST[int]()
+	if !b.IsBalanced() {
+		t.Fatal("empty tree should be balanced")
+	}
+	b.Insert(5)
+	if !b.IsBalanced() {
+		t.Fatal("single node tree should be balanced")
+	}
+
+	// 完全平衡树
+	for _, v := range []int{3, 8, 1, 4, 7, 9} {
+		b.Insert(v)
+	}
+	if !b.IsBalanced() {
+		t.Fatal("complete tree should be balanced")
+	}
+
+	// 一侧加深一层仍平衡(高度差 1)
+	b.Insert(0)
+	if !b.IsBalanced() {
+		t.Fatal("tree with height diff 1 should be balanced")
+	}
+
+	// 退化成链必不平衡
+	c := NewBST[int]()
+	for _, v := range []int{1, 2, 3} {
+		c.Insert(v)
+	}
+	if c.IsBalanced() {
+		t.Fatal("chain tree should not be balanced")
+	}
+}
+
 func TestBSTStringValues(t *testing.T) {
 	b := NewBST[string]()
 	for _, v := range []string{"m", "a", "z"} {

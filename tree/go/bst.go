@@ -152,3 +152,32 @@ func (this *BST[T]) InOrder() []T {
 	walk(this.root)
 	return out
 }
+
+// Height 返回树高(节点数),空树为 0
+func (this *BST[T]) Height() int {
+	h, _ := checkBalance(this.root)
+	return h
+}
+
+// IsBalanced 判断是否平衡(每个节点左右子树高度差不超过 1)
+func (this *BST[T]) IsBalanced() bool {
+	_, ok := checkBalance(this.root)
+	return ok
+}
+
+// checkBalance 一次遍历同时返回子树高与是否平衡,避免 Height 被反复重算
+func checkBalance[T constraints.Ordered](node *bstNode[T]) (height int, balanced bool) {
+	if node == nil {
+		return 0, true
+	}
+	lh, lok := checkBalance(node.left)
+	rh, rok := checkBalance(node.right)
+	diff := lh - rh
+	if diff < 0 {
+		diff = -diff
+	}
+	if lh >= rh {
+		return lh + 1, lok && rok && diff <= 1
+	}
+	return rh + 1, lok && rok && diff <= 1
+}

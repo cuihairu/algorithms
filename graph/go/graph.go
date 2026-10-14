@@ -104,3 +104,41 @@ func (this *Graph) DFS(start string) []string {
 	visit(start)
 	return out
 }
+
+// ShortestPath 返回 from 到 to 的最短路径(边权 1),含两端点;起点即终点返回单点,不可达或顶点不存在返回 nil
+func (this *Graph) ShortestPath(from, to string) []string {
+	if _, ok := this.adj[from]; !ok {
+		return nil
+	}
+	if _, ok := this.adj[to]; !ok {
+		return nil
+	}
+	if from == to {
+		return []string{from}
+	}
+	// BFS 记父节点,首次命中 to 时回溯路径
+	parent := map[string]string{from: ""}
+	queue := []string{from}
+	for head := 0; head < len(queue); head++ {
+		cur := queue[head]
+		for _, next := range this.adj[cur] {
+			if _, seen := parent[next]; seen {
+				continue
+			}
+			parent[next] = cur
+			if next == to {
+				path := []string{to}
+				for p := cur; p != ""; p = parent[p] {
+					path = append(path, p)
+				}
+				// 当前为 to...from,原地反转
+				for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
+					path[i], path[j] = path[j], path[i]
+				}
+				return path
+			}
+			queue = append(queue, next)
+		}
+	}
+	return nil
+}

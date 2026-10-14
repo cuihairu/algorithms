@@ -24,6 +24,8 @@ func (this *BST[T]) Remove(v T) bool   // 不存在返回 false
 func (this *BST[T]) Min() (T, bool)    // 空树返回 false
 func (this *BST[T]) Max() (T, bool)
 func (this *BST[T]) InOrder() []T      // 返回升序切片
+func (this *BST[T]) Height() int       // 节点数树高,空树为 0
+func (this *BST[T]) IsBalanced() bool  // 每节点左右子树高度差 ≤ 1
 ```
 
 ## 实现要点
@@ -31,6 +33,7 @@ func (this *BST[T]) InOrder() []T      // 返回升序切片
 - 插入/删除/查询均为递归实现，返回值带「新子树根 + 是否生效」，由外层统一维护 `size`。
 - 删除分三种情况：叶子/单子直接摘除，**双子节点用右子树最小节点（后继）替换**后转去右子树删后继。
 - `InOrder` 用闭包递归中序遍历，容量按 `size` 预分配。
+- `Height` 与 `IsBalanced` 共用一次递归：`checkBalance` 单趟同时返回子树高与平衡性，O(n) 一趟出结果，避免 `Height` 在平衡判定里被反复重算。
 
 ## 复杂度
 
@@ -39,6 +42,7 @@ func (this *BST[T]) InOrder() []T      // 返回升序切片
 | Insert / Search / Remove | O(log n) | O(n) |
 | Min / Max | O(h) | O(n) |
 | InOrder | O(n) | O(n) |
+| Height / IsBalanced | O(n) | O(n) |
 
 ## 测试状态
 

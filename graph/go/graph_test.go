@@ -108,6 +108,69 @@ func TestGraphDisconnected(t *testing.T) {
 	}
 }
 
+func TestGraphShortestPath(t *testing.T) {
+	// a -> b -> d -> f;a -> c -> e
+	g := NewGraph(true)
+	g.AddEdge("a", "b")
+	g.AddEdge("b", "d")
+	g.AddEdge("d", "f")
+	g.AddEdge("a", "c")
+	g.AddEdge("c", "e")
+
+	// 最短路径取更少边数的路线
+	if got := g.ShortestPath("a", "f"); !eqSeq(got, []string{"a", "b", "d", "f"}) {
+		t.Fatalf("shortest a->f = %v, want [a b d f]", got)
+	}
+	if got := g.ShortestPath("a", "e"); !eqSeq(got, []string{"a", "c", "e"}) {
+		t.Fatalf("shortest a->e = %v, want [a c e]", got)
+	}
+	// 起点即终点
+	if got := g.ShortestPath("a", "a"); !eqSeq(got, []string{"a"}) {
+		t.Fatalf("shortest a->a = %v, want [a]", got)
+	}
+	// 有向图反向不可达
+	if got := g.ShortestPath("f", "a"); got != nil {
+		t.Fatalf("shortest f->a = %v, want nil", got)
+	}
+	// 顶点不存在
+	if got := g.ShortestPath("a", "z"); got != nil {
+		t.Fatalf("shortest a->z = %v, want nil", got)
+	}
+	if got := g.ShortestPath("z", "a"); got != nil {
+		t.Fatalf("shortest z->a = %v, want nil", got)
+	}
+}
+
+func TestGraphShortestPathDirectBeatsIndirect(t *testing.T) {
+	// 直达边必须胜出:a->c 直达 vs a->b->c
+	g := NewGraph(true)
+	g.AddEdge("a", "b")
+	g.AddEdge("b", "c")
+	g.AddEdge("a", "c")
+
+	if got := g.ShortestPath("a", "c"); !eqSeq(got, []string{"a", "c"}) {
+		t.Fatalf("shortest a->c = %v, want [a c]", got)
+	}
+}
+
+func TestGraphShortestPathUndirected(t *testing.T) {
+	g := NewGraph(false)
+	g.AddEdge("a", "b")
+	g.AddEdge("b", "c")
+
+	if got := g.ShortestPath("a", "c"); !eqSeq(got, []string{"a", "b", "c"}) {
+		t.Fatalf("shortest a->c = %v, want [a b c]", got)
+	}
+	if got := g.ShortestPath("c", "a"); !eqSeq(got, []string{"c", "b", "a"}) {
+		t.Fatalf("shortest c->a = %v, want [c b a]", got)
+	}
+	// 不连通分量不可达
+	g.AddEdge("x", "y")
+	if got := g.ShortestPath("a", "x"); got != nil {
+		t.Fatalf("shortest a->x = %v, want nil", got)
+	}
+}
+
 func TestGraphCycle(t *testing.T) {
 	// 有环图遍历必须终止且不重复访问
 	g := NewGraph(true)
