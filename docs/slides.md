@@ -4,6 +4,8 @@ icon: slides
 layout: Slide
 ---
 
+> **English** | [中文](slides.zh.md)
+
 <!-- markdownlint-disable MD024 MD033 MD051 -->
 
 @slidestart
