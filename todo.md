@@ -53,3 +53,15 @@
   - 落地（用户裁定约定：**英文为基名、中文转 .zh.md**）：README.md（英，重写为完整仓库说明）+ README.zh.md（中）；docs/notes 10 篇（9 笔记 + 索引）英文为基名、中文 git mv 为 `.zh.md`，22 文件全部加首屏切换器。模板样板（docs/demo、docs/guide、docs/slides、docs/README）非实质文档，未动。
   - 验收达成：11 对文件 zh/en 行数完全一致（README 65/65、notes 各篇 30~55 逐对相等），切换器逐文件校验为 H1 下第一行；`npm run docs:build` 成功 23→33 页。证据 7d6b72c
 
+## 五、docs 补双语（用户 2026-10-16，本轮范围仅 docs/ 根目录）
+
+- [x] docs/ 根目录文档双语化（P1016A 完成）：根目录共 2 个文档，全部配对完成。
+  - `docs/slides.md`（433 行，**本文件本身已是英文**，reveal.js 幻灯片演示）→ 新增中文版 `docs/slides.zh.md`，逐页对应翻译。
+  - `docs/README.md`（站点首页，中文模板）→ git mv 为 `docs/README.zh.md`，英文基名 `docs/README.md` 重写对应。
+  - 4 个文件全部加语言切换器；`slides.md`/`slides.zh.md` 的切换器在 frontmatter 结束后首行（第 7 行）；`README.md`/`README.zh.md` 的切换器为正文首行（frontmatter 含 17 个 feature 卡，占 102 行，必须占据文件开头，否则 `home: true` 布局失效——此为无法"前 3 行"的唯一例外，已在回报中注明）。
+  - 排除项核对：`CHANGELOG`/`CONTRIBUTING`/`LICENSE`/`CODE_OF_CONDUCT`/`SECURITY` 本仓均不存在，无需排除。
+  - 本仓为 `algorithms`，非 `hello-*` 教学仓，不在免做名单，口径无冲突。
+  - 验收达成：结构骨架逐行比对一致（slides 117 行骨架仅 frontmatter `title` 显示文本随语言变化；home frontmatter 键集合一致）；行数 README 对 112/112、slides 对 436/436；英文基名正文无中文（切换器行除外）；`npm run docs:build` 成功 33→35 页，dist 生成 `slides.html`/`slides.zh.html`/`index.html`/`README.zh.html` 且切换器均在产物中。证据 3fffe15
+  - 环境注记：执行时发现 `node_modules` 已被清空（上轮尚可构建），用 `npm ci` 按 lock 精确还原后构建通过，`package.json`/`package-lock.json` 未被改动。
+- [ ] docs 子目录双语化（下一轮，本轮不动）：`docs/demo/` 5 篇（README/page/markdown/disable/encrypt）+ `docs/guide/` 5 篇（`README.md`、`foo/README.md`、`foo/ray.md`、`bar/README.md`、`bar/baz.md`），共 10 篇，均为 vuepress-theme-hope 模板样板。`docs/notes/` 20 个文件（11 对）已在上轮完成；`docs/.vuepress/` 为站点配置，非文档。
+
