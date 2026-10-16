@@ -63,5 +63,9 @@
   - 本仓为 `algorithms`，非 `hello-*` 教学仓，不在免做名单，口径无冲突。
   - 验收达成：结构骨架逐行比对一致（slides 117 行骨架仅 frontmatter `title` 显示文本随语言变化；home frontmatter 键集合一致）；行数 README 对 112/112、slides 对 436/436；英文基名正文无中文（切换器行除外）；`npm run docs:build` 成功 33→35 页，dist 生成 `slides.html`/`slides.zh.html`/`index.html`/`README.zh.html` 且切换器均在产物中。证据 3fffe15
   - 环境注记：执行时发现 `node_modules` 已被清空（上轮尚可构建），用 `npm ci` 按 lock 精确还原后构建通过，`package.json`/`package-lock.json` 未被改动。
-- [ ] docs 子目录双语化（下一轮，本轮不动）：`docs/demo/` 5 篇（README/page/markdown/disable/encrypt）+ `docs/guide/` 5 篇（`README.md`、`foo/README.md`、`foo/ray.md`、`bar/README.md`、`bar/baz.md`），共 10 篇，均为 vuepress-theme-hope 模板样板。`docs/notes/` 20 个文件（11 对）已在上轮完成；`docs/.vuepress/` 为站点配置，非文档。
+- [x] docs 子目录双语化（R1016E 完成）：`docs/demo/` 5 篇 + `docs/guide/` 5 篇共 10 对全部落地，沿用「英文为基名、中文转 `.zh.md`」约定（git mv 保留历史），20 文件全部加首屏切换器。
+  - 中文侧相对链接改指 `.zh.md` 同伴（demo 索引 4 处、guide 索引 2 处、bar/foo 各 1 处）；`markdown.md` 的 `@include(./README.md{11-17})` 因切换器插入下移 2 行，两侧同步改为 `{13-19}` 并经 dist 产物验证渲染出的就是 4 条目录项。
+  - 代码块/命令/URL 原样保留（flow 图与 demo 的中文节点串、JSON `"label": "散点数据集"`、`#标题列表` 锚点 URL 等均不译）；英文内链锚点改为 `#custom-containers`，dist 中 `id="custom-containers"` 已验证存在。
+  - 验收达成：10 对行数逐对相等（20/20、45/45、18/18、75/75、433/433、19/19、16/16、9/9、16/16、9/9）；切换器逐文件为正文首行（encrypt 对在 H1 标题下第一行）；英文正文中文残留仅切换器行与代码围栏/URL 内（脚本逐行校验）；`npm run docs:build` 成功 35→45 页。证据 f75a95a
+  - 遗留（配置级，非文档改动可解）：sidebar `children: "structure"` 使英/中两套条目并列，且英文页的 上一页/下一页 可能落到中文页——需动 `docs/.vuepress/` 配置（locale 路由或 sidebar 白名单）才能解决，本轮未动。
 
