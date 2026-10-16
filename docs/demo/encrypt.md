@@ -1,15 +1,17 @@
 ---
 icon: lock
 category:
-  - 使用指南
+  - Guide
 tag:
-  - 文章加密
+  - Article encryption
 ---
 
-# 密码加密的文章
+# Encrypted article
 
-实际的文章内容。
+> **English** | [中文](encrypt.zh.md)
 
-段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字段落 1 文字。
+The actual article content.
 
-段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字段落 2 文字。
+Paragraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordParagraph 1 wordword.
+
+Paragraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordParagraph 2 wordword.

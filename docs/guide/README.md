@@ -1,9 +1,11 @@
 ---
-title: 指南
+title: Guide
 icon: creative
 ---
 
-## 功能亮点
+> **English** | [中文](README.zh.md)
+
+## Feature highlights
 
 ### Bar
 

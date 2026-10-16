@@ -3,4 +3,6 @@ title: Baz
 icon: info
 ---
 
-功能详情...
+> **English** | [中文](baz.zh.md)
+
+Feature details...

@@ -1,13 +1,15 @@
 ---
-title: Bar 功能
+title: Bar features
 icon: creative
 ---
 
-## 介绍
+> **English** | [中文](README.zh.md)
 
-我们支持 bar 功能，...
+## Intro
 
-## 详情
+We support the bar feature, ...
+
+## Details
 
 - [baz](baz.md)
 - ...

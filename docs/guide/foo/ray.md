@@ -3,4 +3,6 @@ title: Ray
 icon: config
 ---
 
-功能详情...
+> **English** | [中文](ray.zh.md)
+
+Feature details...

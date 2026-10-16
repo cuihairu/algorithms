@@ -1,11 +1,11 @@
 ---
-title: 布局与功能禁用
+title: Disable layout and features
 icon: config
 order: 3
 category:
-  - 使用指南
+  - Guide
 tag:
-  - 禁用
+  - Disable
 
 navbar: false
 sidebar: false
@@ -23,20 +23,22 @@ footer: false
 backtotop: false
 ---
 
-你可以通过设置页面的 Frontmatter，在页面禁用功能与布局。
+> **English** | [中文](disable.zh.md)
+
+You can disable features and layouts on a page by setting the Frontmatter.
 
 <!-- more -->
 
-本页面就是一个示例，禁用了如下功能:
+This page is an example, with the following features disabled:
 
-- 导航栏
-- 侧边栏
-- 路径导航
-- 页面信息
-- 贡献者
-- 编辑此页链接
-- 更新时间
-- 上一篇/下一篇 链接
-- 评论
-- 页脚
-- 返回顶部按钮
+- Navbar
+- Sidebar
+- Pathnav
+- Page info
+- Contributors
+- Edit page link
+- Last updated time
+- Previous/next links
+- Comment
+- Footer
+- Back to top button

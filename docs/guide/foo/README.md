@@ -1,13 +1,15 @@
 ---
-title: Foo 功能
+title: Foo features
 icon: config
 ---
 
-## 介绍
+> **English** | [中文](README.zh.md)
 
-我们支持 foo 功能，...
+## Intro
 
-## 详情
+We support the foo feature, ...
+
+## Details
 
 - [ray](ray.md)
 - ...

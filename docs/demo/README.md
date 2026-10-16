@@ -1,17 +1,19 @@
 ---
-title: 主要功能与配置演示
+title: Main features and configuration demo
 index: false
 icon: discover
 category:
-  - 使用指南
+  - Guide
 ---
 
-## 目录
+> **English** | [中文](README.zh.md)
 
-- [Markdown 展示](markdown.md)
+## Table of Contents
 
-- [页面展示](page.md)
+- [Markdown demo](markdown.md)
 
-- [禁用展示](disable.md)
+- [Page demo](page.md)
 
-- [加密展示](encrypt.md)
+- [Disable demo](disable.md)
+
+- [Encrypt demo](encrypt.md)
