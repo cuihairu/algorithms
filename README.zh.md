@@ -1,5 +1,7 @@
 # algorithms
 
+[![Status](https://img.shields.io/badge/status-in%20development-orange)](https://github.com/cuihairu/algorithms/releases)
+
 > [English](README.md) | **中文**
 
 用 Go 实现的数据结构与算法，拆分为独立 Go module，各自带单元测试，另附一个 VuePress 文档站。

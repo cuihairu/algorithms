@@ -1,5 +1,7 @@
 # algorithms
 
+[![Status](https://img.shields.io/badge/status-in%20development-orange)](https://github.com/cuihairu/algorithms/releases)
+
 > **English** | [中文](README.zh.md)
 
 Data structures and algorithms implemented in Go, split into independent Go modules, each with unit tests, plus a VuePress documentation site.
