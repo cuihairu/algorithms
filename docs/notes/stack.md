@@ -5,7 +5,7 @@ icon: layer-group
 
 # Stack
 
-> **English** | [中文](stack.zh.md)
+> **English** | [中文](/zh/notes/stack)
 
 `stack/go` defines a unified `Stack` interface and provides array and linked list implementations.
 

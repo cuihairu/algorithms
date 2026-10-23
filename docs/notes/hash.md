@@ -5,7 +5,7 @@ icon: key
 
 # Hash Map
 
-> **English** | [中文](hash.zh.md)
+> **English** | [中文](/zh/notes/hash)
 
 `hash/go` implements a string-key hash map that resolves collisions by chaining. The directory is named `hash` to avoid clashing with the standard library; the Go module is named `hashmap`.
 

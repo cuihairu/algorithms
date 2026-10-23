@@ -26,7 +26,7 @@ footer: This is a test footer
 copyright: No copyright
 ---
 
-> **English** | [中文](page.zh.md)
+> **English** | [中文](/zh/demo/page)
 
 Content before the `more` comment is treated as the article excerpt.
 

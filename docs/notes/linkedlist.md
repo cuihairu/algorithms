@@ -5,7 +5,7 @@ icon: link
 
 # Linked List
 
-> **English** | [中文](linkedlist.zh.md)
+> **English** | [中文](/zh/notes/linkedlist)
 
 `linkedlist/go` implements a singly linked list with a head sentinel node, guarded by a read-write lock.
 

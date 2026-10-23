@@ -3,6 +3,6 @@ title: Ray
 icon: config
 ---
 
-> **English** | [中文](ray.zh.md)
+> **English** | [中文](/zh/guide/foo/ray)
 
 Feature details...

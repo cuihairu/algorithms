@@ -5,7 +5,7 @@ icon: config
 
 # Array
 
-> **English** | [中文](array.zh.md)
+> **English** | [中文](/zh/notes/array)
 
 `array/go` wraps Go's native slice in a generic array type with bounds checks.
 

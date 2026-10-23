@@ -5,7 +5,7 @@ icon: sort-amount-up
 
 # Binary Heap
 
-> **English** | [中文](heap.zh.md)
+> **English** | [中文](/zh/notes/heap)
 
 `heap/go` implements a generic min-heap backed by an array; every parent node is ≤ its two children.
 

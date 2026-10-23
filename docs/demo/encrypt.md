@@ -8,7 +8,7 @@ tag:
 
 # Encrypted article
 
-> **English** | [中文](encrypt.zh.md)
+> **English** | [中文](/zh/demo/encrypt)
 
 The actual article content.
 

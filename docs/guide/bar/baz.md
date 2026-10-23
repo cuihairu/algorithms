@@ -3,6 +3,6 @@ title: Baz
 icon: info
 ---
 
-> **English** | [中文](baz.zh.md)
+> **English** | [中文](/zh/guide/bar/baz)
 
 Feature details...

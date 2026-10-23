@@ -5,7 +5,7 @@ icon: project-diagram
 
 # Graph
 
-> **English** | [中文](graph.zh.md)
+> **English** | [中文](/zh/notes/graph)
 
 `graph/go` implements an adjacency-list unweighted graph with string vertices, supporting both directed and undirected modes.
 

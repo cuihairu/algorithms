@@ -5,7 +5,7 @@ icon: stream
 
 # Queue
 
-> **English** | [中文](queue.zh.md)
+> **English** | [中文](/zh/notes/queue)
 
 `queue/go` defines a unified `Queue` interface and provides array and linked list implementations, first in first out (FIFO).
 

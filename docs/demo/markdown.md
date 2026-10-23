@@ -8,7 +8,7 @@ tag:
   - Markdown
 ---
 
-> **English** | [中文](markdown.zh.md)
+> **English** | [中文](/zh/demo/markdown)
 
 VuePress generates pages mainly from Markdown files. So you can use it to easily create a documentation or blog site.
 

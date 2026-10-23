@@ -5,7 +5,7 @@ icon: order
 
 # Sorting
 
-> **English** | [中文](sorts.zh.md)
+> **English** | [中文](/zh/notes/sorts)
 
 `sorts/go` implements 7 sorting algorithms, all generic (`golang.org/x/exp/constraints`).
 

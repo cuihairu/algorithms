@@ -5,7 +5,7 @@ icon: tree
 
 # Binary Search Tree
 
-> **English** | [中文](tree.zh.md)
+> **English** | [中文](/zh/notes/tree)
 
 `tree/go` implements a generic binary search tree (BST) with no duplicate elements.
 

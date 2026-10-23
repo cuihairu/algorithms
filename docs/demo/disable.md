@@ -23,7 +23,7 @@ footer: false
 backtotop: false
 ---
 
-> **English** | [中文](disable.zh.md)
+> **English** | [中文](/zh/demo/disable)
 
 You can disable features and layouts on a page by setting the Frontmatter.
 

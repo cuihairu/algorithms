@@ -4,7 +4,7 @@ icon: slides
 layout: Slide
 ---
 
-> **English** | [中文](slides.zh.md)
+> **English** | [中文](/zh/slides)
 
 <!-- markdownlint-disable MD024 MD033 MD051 -->
 
