@@ -26,4 +26,4 @@
 - [ ] queue 补编译期接口守卫（stack 已加，queue 未加）
 - [ ] docs/demo、docs/guide、docs/slides 为旧 VuePress 模板页（@include 等特性 VitePress 不支持），迁移或删除
 - [ ] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client）
-- [ ] 启用 GitHub Pages 并验证徽章可达（部署 workflow 已改为 VitePress + pnpm）
+- [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm）
