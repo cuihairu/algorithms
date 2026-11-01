@@ -1,0 +1,8 @@
+overrides:
+  "@xmldom/xmldom@<0.9.12": 0.9.12
+  "rollup@<2.80.0": 2.80.0
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  vue-demi: true

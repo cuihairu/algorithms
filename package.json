@@ -1,14 +1,14 @@
 {
-  "name": "vuepress-theme-hope-template",
+  "name": "algorithms-docs",
   "version": "2.0.0",
-  "description": "A project of vuepress-theme-hope",
+  "description": "Data structures and algorithms in Go — VitePress documentation site",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@12.10.1",
   "scripts": {
-    "docs:build": "vuepress build docs",
-    "docs:clean-dev": "vuepress dev docs --clean-cache",
-    "docs:dev": "vuepress dev docs",
-    "docs:build:vitepress": "vitepress build docs"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.53",
@@ -54,11 +54,5 @@
     "vite": "6.4.3",
     "yaml": "2.8.3",
     "mermaid": "10.9.8"
-  },
-  "pnpm": {
-    "overrides": {
-      "@xmldom/xmldom@<0.9.12": "0.9.12",
-      "rollup@<2.80.0": "2.80.0"
-    }
   }
 }
