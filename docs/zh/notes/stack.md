@@ -29,6 +29,8 @@ type Stack interface {
 
 ## 实现
 
+构造函数：`NewArrayStack()` 与 `NewLinkedListStack()`。
+
 | 实现 | 结构 | 特点 |
 | --- | --- | --- |
 | `ArrayStack` | 切片 + top 游标 | `Flush` 后复用底层数组；`String()` 输出 `[a<b<c]`（底→顶） |

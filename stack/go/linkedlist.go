@@ -49,3 +49,6 @@ func (this *LinkedListStack) Flush() {
 	this.top = nil
 	this.size = 0
 }
+
+// 编译期断言:LinkedListStack 实现 Stack 接口
+var _ Stack = (*LinkedListStack)(nil)

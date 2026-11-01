@@ -32,7 +32,7 @@ func (this *BST[T]) IsBalanced() bool  // left/right subtree height diff ≤ 1 a
 
 ## Implementation notes
 
-- Insert/remove/search are all recursive and return "new subtree root + whether it took effect", with `size` maintained uniformly by the caller.
+- Insert/remove are recursive and return "new subtree root + whether it took effect"; search is iterative (a walk down from the root); `size` is maintained uniformly by the caller.
 - Removal splits into three cases: leaf/single child are detached directly; **a node with two children is replaced by the smallest node of its right subtree (the successor)**, which is then removed from the right subtree.
 - `InOrder` walks recursively in a closure with capacity preallocated by `size`.
 - `Height` and `IsBalanced` share one pass: `checkBalance` returns both the subtree height and the balance at once, O(n) in one go, avoiding repeated recomputation of `Height`.

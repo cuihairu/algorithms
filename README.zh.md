@@ -1,11 +1,13 @@
 # algorithms
 
-<p align="center">[![Status](https://img.shields.io/badge/status-in%20development-orange)](https://github.com/cuihairu/algorithms/releases) <a href="https://cuihairu.github.io/algorithms/zh//"><img src="https://img.shields.io/badge/%E6%96%87%E6%A1%A3-blue" alt="docs"></a>
+<p align="center">
+  <a href="https://github.com/cuihairu/algorithms/releases"><img alt="状态" src="https://img.shields.io/badge/status-%E5%BC%80%E5%8F%91%E4%B8%AD-orange"></a>
+  <a href="https://cuihairu.github.io/algorithms/zh/"><img alt="文档" src="https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-blue"></a>
 </p>
 
 > [English](README.md) | **中文**
 
-用 Go 实现的数据结构与算法，拆分为独立 Go module，各自带单元测试，另附一个 VuePress 文档站。
+用 Go 实现的数据结构与算法，拆分为独立 Go module，各自带单元测试，另附一个双语 VitePress 文档站。
 
 ## 模块
 
@@ -34,7 +36,7 @@ algorithms/
 ├── heap/go/
 ├── hash/go/
 ├── graph/go/
-├── docs/          # VuePress 站点（每个模块一篇笔记）
+├── docs/          # VitePress 站点（每个模块一篇笔记）
 ├── go.work        # 九个模块统一工作区
 └── package.json   # 文档脚本
 ```
@@ -55,12 +57,12 @@ cd linkedlist/go && go test -race ./...
 
 ## 文档站
 
-`docs/` 是一个 VuePress 站点（theme-hope），每个模块一篇笔记。
+`docs/` 是一个 VitePress 站点，每个模块一篇笔记；英文位于站点根，简体中文位于 `/zh/`。
 
 ```bash
-npm install
-npm run docs:dev     # 本地开发服务器
-npm run docs:build   # 构建到 docs/.vuepress/dist
+pnpm install
+pnpm run docs:dev     # 本地开发服务器
+pnpm run docs:build   # 构建到 docs/.vitepress/dist
 ```
 
 ## Go 版本

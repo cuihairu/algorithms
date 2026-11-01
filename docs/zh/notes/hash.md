@@ -7,7 +7,7 @@ icon: key
 
 > [English](/notes/hash) | **中文**
 
-`hash/go` 模块实现字符串键哈希表，链地址法解决冲突。模块目录名 `hash` 是为避让标准库，Go module 名为 `hashmap`。
+`hash/go` 模块实现字符串键哈希表，链地址法解决冲突。Go module 名为 `hashmap`，使导入路径避开标准库 `hash` 包；目录为 `hash`。
 
 ## 实现位置
 

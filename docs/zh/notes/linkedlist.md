@@ -16,6 +16,8 @@ icon: link
 
 ## 接口
 
+构造函数：`NewLinkedList()`（带头哨兵节点的链表）。
+
 | 方法 | 说明 |
 | --- | --- |
 | `AddFirst / AddLast` | 头插 / 尾插 |

@@ -1,13 +1,13 @@
 # algorithms
 
 <p align="center">
-  <a href="https://github.com/cuihairu/algorithms/releases"></a> <a href="https://cuihairu.github.io/algorithms//"></a>
-  <img alt="Status" src="https://img.shields.io/badge/status-in%20development-orange"> <img src="https://img.shields.io/badge/docs-blue" alt="docs">
+  <a href="https://github.com/cuihairu/algorithms/releases"><img alt="status" src="https://img.shields.io/badge/status-in%20development-orange"></a>
+  <a href="https://cuihairu.github.io/algorithms/"><img alt="docs" src="https://img.shields.io/badge/docs-english-blue"></a>
 </p>
 
 > **English** | [中文](README.zh.md)
 
-Data structures and algorithms implemented in Go, split into independent Go modules, each with unit tests, plus a VuePress documentation site.
+Data structures and algorithms implemented in Go, split into independent Go modules, each with unit tests, plus a bilingual VitePress documentation site.
 
 ## Modules
 
@@ -36,7 +36,7 @@ algorithms/
 ├── heap/go/
 ├── hash/go/
 ├── graph/go/
-├── docs/          # VuePress site (a note for every module)
+├── docs/          # VitePress site (a note for every module)
 ├── go.work        # all nine modules in one workspace
 └── package.json   # docs scripts
 ```
@@ -57,12 +57,12 @@ cd linkedlist/go && go test -race ./...
 
 ## Documentation site
 
-`docs/` is a VuePress site (theme-hope) with a note for every module.
+`docs/` is a VitePress site with a note for every module; English lives at the site root and Simplified Chinese under `/zh/`.
 
 ```bash
-npm install
-npm run docs:dev     # local dev server
-npm run docs:build   # build into docs/.vuepress/dist
+pnpm install
+pnpm run docs:dev     # local dev server
+pnpm run docs:build   # build into docs/.vitepress/dist
 ```
 
 ## Go version

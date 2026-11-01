@@ -16,6 +16,8 @@ icon: link
 
 ## Interface
 
+Constructor: `NewLinkedList()` (a list with a head sentinel node).
+
 | Method | Description |
 | --- | --- |
 | `AddFirst / AddLast` | head insert / tail insert |

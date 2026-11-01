@@ -71,3 +71,6 @@ func (this *ArrayStack) String() string {
 	}
 	return fmt.Sprintf("[%s]", strings.Join(ss, "<"))
 }
+
+// 编译期断言:ArrayStack 实现 Stack 接口
+var _ Stack = (*ArrayStack)(nil)

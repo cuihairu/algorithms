@@ -29,12 +29,14 @@ type Queue interface {
 
 ## Implementations
 
+Constructors: `NewArrayQueue()` and `NewLinkedListQueue()`.
+
 | Implementation | Structure | Notes |
 | --- | --- | --- |
 | `ArrayQueue` | slice + `head` front cursor | `Dequeue` only moves the cursor, never clears elements; the underlying slice is reclaimed and the cursor reset **only when the queue is emptied**; `String()` outputs `[a<b<c]` (front → tail) |
 | `LinkedListQueue` | singly linked list with head/tail pointers | enqueue via tail, dequeue via head, tail maintained automatically |
 
-Both implementations return `nil` for `Dequeue`/`Front` on an empty queue, no panic. Note that while the `ArrayQueue` is never empty, its underlying slice keeps growing with `Enqueue` (it is reclaimed only when emptied).
+Both implementations return `nil` for `Dequeue`/`Front` on an empty queue, no panic. Note that while the `ArrayQueue` is not empty, its underlying slice keeps growing with `Enqueue` (it is reclaimed only when emptied).
 
 ## Complexity
 

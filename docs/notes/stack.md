@@ -29,6 +29,8 @@ type Stack interface {
 
 ## Implementations
 
+Constructors: `NewArrayStack()` and `NewLinkedListStack()`.
+
 | Implementation | Structure | Notes |
 | --- | --- | --- |
 | `ArrayStack` | slice + top cursor | `Flush` reuses the underlying array; `String()` outputs `[a<b<c]` (bottom → top) |
