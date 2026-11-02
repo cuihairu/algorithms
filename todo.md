@@ -20,10 +20,11 @@
 
 ## 待办
 
-- [ ] sorts selection 排序补测试（selection_test.go 为空文件）
-- [ ] array Insert/Pop 允许 index>len 造成空洞（零值写入）
-- [ ] linkedlist RemoveLast 冗余 isEmpty 判断
+- [ ] sorts 冒泡/计数/插入/快排测试补断言（现仅 t.Log 烟测，曾掩盖 MergeSort P0；selection_test.go 为空文件）
+- [ ] graph 无向 AddEdge(A,A) 自环向自身邻接表追加两次（EdgeCount 记 1）
+- [ ] linkedlist RemoveLast 冗余 isEmpty 判断（死代码）
 - [ ] queue 补编译期接口守卫（stack 已加，queue 未加）
+- [ ] 说明非线程安全：仅 linkedlist 文档化 RWLock，queue/stack/tree/heap/hash/graph 未声明并发限制
 - [ ] docs/demo、docs/guide、docs/slides 为旧 VuePress 模板页（@include 等特性 VitePress 不支持），迁移或删除
 - [ ] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client）
 - [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm）
