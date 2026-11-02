@@ -1,8 +1,7 @@
 # algorithms
 
 <p align="center">
-  <a href="https://github.com/cuihairu/algorithms/releases"><img alt="状态" src="https://img.shields.io/badge/status-%E5%BC%80%E5%8F%91%E4%B8%AD-orange"></a>
-  <a href="https://cuihairu.github.io/algorithms/zh/"><img alt="文档" src="https://img.shields.io/badge/docs-%E4%B8%AD%E6%96%87-blue"></a>
+  <a href="https://github.com/cuihairu/algorithms/releases"><img alt="状态" src="https://img.shields.io/badge/status-%E5%BC%80%E5%8F%91%E4%B8%AD-orange"></a> <a href="https://cuihairu.github.io/algorithms/zh/"><img src="https://img.shields.io/badge/%E6%96%87%E6%A1%A3-blue" alt="文档"></a>
 </p>
 
 > [English](README.md) | **中文**
