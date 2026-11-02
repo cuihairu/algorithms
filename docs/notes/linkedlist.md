@@ -23,7 +23,7 @@ Constructor: `NewLinkedList()` (a list with a head sentinel node).
 | `AddFirst / AddLast` | head insert / tail insert |
 | `GetFirst / GetLast` | read head / read tail |
 | `RemoveFirst / RemoveLast` | remove head / remove tail, empty list returns nil |
-| `Insert(index, element)` | 1-based index insert; `index<=0` is a no-op; out of range behaves as a tail insert |
+| `Insert(index, element)` | 1-based index insert; valid range is `[1, size+1]` (`1` is head insert, `size+1` is tail insert); returns `error` and returns `ErrIndexOutOfRange` when out of range |
 | `DeleteByIndex(index)` | delete by index, out of range is a no-op |
 | `DeleteByBottomIndex(index)` | delete the Nth from the end (fast/slow pointers) |
 | `Contains(element)` | whether it contains the element |

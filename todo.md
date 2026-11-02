@@ -42,7 +42,7 @@
 
 > 独立审核（3eed44c361d6..HEAD，2026-11-02）：逐文件复核该区间 16 个提交（Go 修复+测试、docs 站迁移/依赖清理、go.work/lock），9 模块 `go test ./...` 与 `linkedlist/queue -race` 复跑全绿；代码侧未见新的越界/泄漏/竞态/注入/反序列化缺陷，发现集中在文档漂移与测试缺口。
 
-- [ ] 审核发现：`LinkedList.Insert` 返回 `error` 为破坏性公开 API 变更，但 docs/zh/notes/linkedlist.md:26 与 docs/notes/linkedlist.md:26 仍写「index<=0 不动作；越界等价尾插」，与 `321c223` 后行为（越界返回 ErrIndexOutOfRange、`index<=0` 同样报错）矛盾且未记载新返回类型，违反验收口径「README/docs 与源码一致」（linkedlist/go/linkedlist.go:174）
+- [x] 审核发现：`LinkedList.Insert` 返回 `error` 为破坏性公开 API 变更，但 docs/zh/notes/linkedlist.md:26 与 docs/notes/linkedlist.md:26 仍写「index<=0 不动作；越界等价尾插」，与 `321c223` 后行为（越界返回 ErrIndexOutOfRange、`index<=0` 同样报错）矛盾且未记载新返回类型，违反验收口径「README/docs 与源码一致」（linkedlist/go/linkedlist.go:174），证据 docs/notes/linkedlist.md:26 与 docs/zh/notes/linkedlist.md:26 已改为合法区间 `[1,size+1]` + 返回 error/越界 ErrIndexOutOfRange
 - [ ] 审核发现：`ArrayQueue.Enqueue` 压实修复后，docs/zh/notes/queue.md:39 与 docs/notes/queue.md:39 仍称「非空期间底层切片随 Enqueue 持续增长（只在清空时回收）」，与 `7777716` 的 `head>=len/2` 前移压实（内存有界）矛盾，笔记陈旧（queue/go/array.go:35-39）
 - [ ] 审核发现：TestArrayQueueBoundedMemory 仅断言 `Size()` 与 `cap`，未断言压实后出队元素仍保持 FIFO 顺序，若压实逻辑错位（丢元素/乱序）测试无法捕获（queue/go/array_test.go:96-111）
 - [ ] 审核发现：TestLinkedListInsert 未覆盖 `index==1` 头插与空链表合法插入（`size+1==1`）边界，越界/合法边界覆盖不完整（linkedlist/go/linkedlist_test.go:123-156）

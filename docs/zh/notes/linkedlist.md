@@ -23,7 +23,7 @@ icon: link
 | `AddFirst / AddLast` | 头插 / 尾插 |
 | `GetFirst / GetLast` | 读首 / 读尾 |
 | `RemoveFirst / RemoveLast` | 删首 / 删尾，空表返回 nil |
-| `Insert(index, element)` | 1 基下标插入；`index<=0` 不动作；越界等价尾插 |
+| `Insert(index, element)` | 1 基下标插入；合法区间 `[1, size+1]`（1 为头插，`size+1` 为尾插）；返回 `error`，越界返回 `ErrIndexOutOfRange` |
 | `DeleteByIndex(index)` | 按下标删除，越界不动作 |
 | `DeleteByBottomIndex(index)` | 删倒数第 N 个（快慢指针） |
 | `Contains(element)` | 是否包含 |
