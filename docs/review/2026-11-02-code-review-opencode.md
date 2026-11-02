@@ -74,3 +74,47 @@ title: 代码深审报告（2026-11-02，opencode）
   - `0c4cabd` fix: array bounds checks use logical length not capacity
   - (本报告) docs: add code review report 2026-11-02 (opencode)
 - push：本轮报告提交后推送至 origin/main
+
+## 独立审核意见（2026-11-02）
+
+> 审核人：异模型独立审核员（干净上下文，不信任报告原文，逐条实证核验）。
+> 方法：①每条发现打开现行源码对照 file:line；②已修 P0/P1 核对 commit 存在性并复跑测试；③另抽 3 个报告未覆盖的高危面（认证/输入处理/资源释放）猎捕漏网。
+
+### 逐条真实性判定（核验 12 条）
+
+| ID | 判定 | 核验依据 |
+| --- | --- | --- |
+| B1 | ✅ 属实·已修复 | `9edeae7` 存在；现行 sorts/go/merge.go:12-20 含 `i++`（line 15）与左/右余量回拷（21-28）；sorts 测试绿 |
+| B2 | ✅ 属实·已修复 | 同上；报告已标注历史行号与现行 21-28，口径清晰 |
+| B3 | ✅ 属实·已修复 | `0c4cabd` 存在；array/go/array.go:37 `isIndexOutOfRange` 现用 `Len()`；array 测试绿 |
+| B4 | ✅ 属实·已修复 | 7 个 *_test.go 现均含断言（各 4 处），selection_test.go 非空（`6ce60f8`） |
+| B5 | ✅ 属实·已修复 | graph/go/graph.go:37 守卫 `!directed && from != to` 防自环重复追加；探针实证无向/定向自环 Neighbors 长度均为 1（`a089271`） |
+| B6 | ✅ 属实·已修复 | linkedlist/go/linkedlist.go:144-146 现仅单次 isEmpty（`0c24336`） |
+| B7 | ✅ 属实·已修复 | queue/go/array.go:12 与 queue/go/linkedlist.go:9 双编译期守卫（`b4cc706`） |
+| B8 | ✅ 属实·已修复 | queue/stack/tree/heap/hash/graph 6 包头注释均含「非线程安全」声明（`e491656`） |
+| B9 | ✅ 属实·已修复，⚠️ 行号漂移 | 报告引 103-105，现行转换在 106-109（`#nosec G115` 在 108）；gosec 复跑 0 告警（`c127554`） |
+| B10 | ✅ 属实·已修复 | array/go/array.go:50-52 越界判先于 53-55 满判；探针实证 `Insert(3,·)`→OutOfRange、`Insert(2,·)`（尾插合法位）→FullArray，优先级正确（`819c537`） |
+| B11 | ✅ 属实·已修复，⚠️ 行号漂移 | 报告引 172-186，现行 Insert 在 173-189；`i<index` 越界检查（185-188）返回 ErrIndexOutOfRange，`index<=0` 同样报错（`321c223`） |
+| B12 | ✅ 属实·已修复，⚠️ 行号漂移 | 报告引 27-30，现行 Enqueue 在 33-41；`head>=len/2` 前移压实（35-39）+清空复位，稳态内存有界（`7777716`） |
+
+### 已修 P0/P1 核验（任务②）
+
+- `9edeae7`、`0c4cabd` 均在 git 历史存在；9 模块 `go test ./...` 复跑**全绿**；`linkedlist -race` 复跑**绿**。
+
+### 漏网抽查（任务③：认证 / 输入处理 / 资源释放）
+
+- **认证**：全仓非测试 Go 代码 grep 无 secret/token/api key/auth/bearer/session 模式——该面不存在，无可漏网。
+- **输入处理**：探针覆盖 graph（定向自环 Neighbors 长度 1、空串键 `AddEdge("","")` 不 panic 且去重、AddVertex 幂等）、array（头插移位、空结构 `Find`→OutOfRange、越界优先于满）、stack（空栈 `Pop`→nil 不 panic）、hash（缺失键 Get/Delete→(nil,false)、空串键往返、201 项 resize 后全量回查）——**全部通过，漏网 0**。
+- **资源释放**：linkedlist 16 处 Lock/RLock ↔ 16 处 defer Unlock/RUnlock 完美配对无锁泄漏；queue 稳态压实 + Flush 复位；本仓无文件/网络/goroutine 外部资源。**泄漏 0**。
+
+### 文档准确性扣分项（非缺陷声明问题）
+
+1. **状态列过时**：B4/B7/B8/B9/B11/B12 仍标「记 todo」，实际均已修（见上表 commit）。
+2. **§④/§⑤ 摘要过时**：仍写「已修 3、剩余 9」；实际 12 条全修，代码级剩余 0（仅 Pages 托管等环境项悬置）。
+3. **行号漂移 3 处**：B9/B11/B12——修复波编辑使行号前移，报告未同步。
+
+### 总评
+
+- **核验 12 条：证伪 0**（12/12 缺陷声明实证为真，每条有对应修复 commit 与回归佐证）
+- **漏网 0**（3 个高危面抽查干净）
+- **综合可信度：90%** —— 缺陷声明可信度 100%，证据行号精度 9/12，报告状态列与摘要未随修复波同步是主要扣分项；扣分均为文档时效性问题，不动摇任何一条发现的技术结论。
