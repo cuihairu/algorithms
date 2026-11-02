@@ -91,3 +91,22 @@ func TestArrayQueueFlushReuse(t *testing.T) {
 		t.Fatalf("dequeue after flush+enqueue = %v, want 7", v)
 	}
 }
+
+// 回归:稳态下 Enqueue 恒定 append 使底层切片容量随总操作数增长而非随当前大小;此处验证容量有界。
+func TestArrayQueueBoundedMemory(t *testing.T) {
+	q := NewArrayQueue()
+	for i := 0; i < 16; i++ {
+		q.Enqueue(i)
+	}
+	// 稳态:每轮入队1出队1,保持 16 个元素,共 10000 轮
+	for i := 0; i < 10000; i++ {
+		q.Enqueue(i)
+		q.Dequeue()
+	}
+	if cap(q.data) > 64 {
+		t.Fatalf("capacity grew to %d, want bounded near initial 32", cap(q.data))
+	}
+	if q.Size() != 16 {
+		t.Fatalf("size = %d, want 16", q.Size())
+	}
+}

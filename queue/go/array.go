@@ -31,7 +31,12 @@ func (this *ArrayQueue) Size() int {
 }
 
 func (this *ArrayQueue) Enqueue(v any) {
-	// 队列为空时游标已重置,直接追加即可
+	// 稳态下前部已出队槽位不复用会令底层切片随总操作数无限增长;当前半部分已消费时前移压实
+	if this.head > 0 && this.head >= len(this.data)/2 {
+		copy(this.data, this.data[this.head:])
+		this.data = this.data[:len(this.data)-this.head]
+		this.head = 0
+	}
 	this.data = append(this.data, v)
 }
 
