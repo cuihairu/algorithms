@@ -20,7 +20,7 @@
 
 ## 待办
 
-- [ ] sorts 冒泡/计数/插入/快排测试补断言（现仅 t.Log 烟测，曾掩盖 MergeSort P0；selection_test.go 为空文件）
+- [x] sorts 冒泡/计数/插入/快排测试补断言（现仅 t.Log 烟测，曾掩盖 MergeSort P0；selection_test.go 为空文件），证据 sorts/go test 全绿 12 测试（含 Correctness 断言）
 - [ ] graph 无向 AddEdge(A,A) 自环向自身邻接表追加两次，EdgeCount 记 1（graph/go/graph.go:31-35，实证 Neighbors(a)=[a a]）
 - [ ] linkedlist RemoveLast 冗余 isEmpty 判断（死代码）
 - [ ] queue 补编译期接口守卫（stack 已加，queue 未加）
@@ -32,3 +32,10 @@
 - [ ] docs/demo、docs/guide、docs/slides 为旧 VuePress 模板页（@include 等特性 VitePress 不支持），迁移或删除
 - [ ] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client）
 - [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm）
+
+## 审核发现
+
+- [ ] 审核发现：报告 B6 行号引用 linkedlist/go/linkedlist.go:105-108 指向 `Reverse()`，实际重复 isEmpty 判断在 `RemoveLast` 的 140-145（死代码在 143-145）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:34）
+- [ ] 审核发现：报告 B10 行号引用 array/go/array.go:32-43 起点错误，`Insert` 实际在 49-55（先判 FullArray 在 50-52，越界判在 53-54）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:38）
+- [ ] 审核发现：报告 B5 行号 graph/go/graph.go:24-37 覆盖 AddEdge 整体（24-36），但 todo.md 对应条目标 31-35；两处行号口径不一致，需统一（docs/review/2026-11-02-code-review-opencode.md:33）
+- [ ] 审核发现：报告 B2 行号 sorts/go/merge.go:20-23 指向当前已修复代码，当前 merge 的左半余量回拷在 21-24、右半余量在 25-28；报告中「20-23」为历史缺陷行号，对已修复代码需标注 commit 前行号或改为当前文件行号（docs/review/2026-11-02-code-review-opencode.md:30）
