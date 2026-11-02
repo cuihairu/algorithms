@@ -33,11 +33,8 @@ func (a *Array[T]) Cap() uint {
 }
 
 func (a *Array[T]) isIndexOutOfRange(index uint) bool {
-	if index >= a.Cap() {
-		return true
-	} else {
-		return false
-	}
+	// 元素读写只对已占用区间 [0, len) 合法;容量仅决定可扩展上限
+	return index >= a.Len()
 }
 
 func (a *Array[T]) Find(index uint) (T, error) {
@@ -48,12 +45,12 @@ func (a *Array[T]) Find(index uint) (T, error) {
 	return a.data[index], nil
 }
 
-// 插入值到索引index上
+// 插入值到索引index上,合法区间 [0, len](等于 len 即尾插)
 func (a *Array[T]) Insert(index uint, v T) error {
 	if a.Len() == a.Cap() {
 		return FullArray
 	}
-	if index != a.len && a.isIndexOutOfRange(index) {
+	if index > a.Len() {
 		return OutOfRange
 	}
 	for i := a.len; i > index; i-- {
