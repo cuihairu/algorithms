@@ -154,6 +154,38 @@ func TestLinkedListInsert(t *testing.T) {
 	}
 }
 
+// 回归:Insert 边界覆盖 index==1 头插与空链表合法插入(size+1==1),且越界不破坏链表。
+func TestLinkedListInsertBoundaries(t *testing.T) {
+	// index==1:头插
+	l := newList(2, 3)
+	if err := l.Insert(1, 1); err != nil {
+		t.Fatalf("Insert(1,1) returned error: %v", err)
+	}
+	if !sameSeq(elements(l), 1, 2, 3) {
+		t.Fatalf("after head insert = %v, want [1 2 3]", elements(l))
+	}
+
+	// 空链表合法插入:size+1==1,等价于头插/尾插
+	empty := NewLinkedList()
+	if err := empty.Insert(1, 42); err != nil {
+		t.Fatalf("Insert on empty list returned error: %v", err)
+	}
+	if !sameSeq(elements(empty), 42) {
+		t.Fatalf("empty list after insert = %v, want [42]", elements(empty))
+	}
+
+	// 空链表越界:index==0 与 index>1 均应报错且不修改
+	for _, idx := range []int{0, 2} {
+		e := NewLinkedList()
+		if err := e.Insert(idx, 7); err != ErrIndexOutOfRange {
+			t.Fatalf("Insert(%d,..) on empty want ErrIndexOutOfRange, got %v", idx, err)
+		}
+		if e.Size() != 0 {
+			t.Fatalf("empty list Insert(%d,..) should not modify, size=%d", idx, e.Size())
+		}
+	}
+}
+
 func TestLinkedListReverse(t *testing.T) {
 	l := newList(1, 2, 3)
 	l.Reverse()
