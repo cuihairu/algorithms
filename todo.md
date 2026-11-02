@@ -35,7 +35,7 @@
 
 ## 审核发现
 
-- [ ] 审核发现：报告 B6 行号引用 linkedlist/go/linkedlist.go:105-108 指向 `Reverse()`，实际重复 isEmpty 判断在 `RemoveLast` 的 140-145（死代码在 143-145）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:34）
-- [ ] 审核发现：报告 B10 行号引用 array/go/array.go:32-43 起点错误，`Insert` 实际在 49-55（先判 FullArray 在 50-52，越界判在 53-54）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:38）
-- [ ] 审核发现：报告 B5 行号 graph/go/graph.go:24-37 覆盖 AddEdge 整体（24-36），但 todo.md 对应条目标 31-35；两处行号口径不一致，需统一（docs/review/2026-11-02-code-review-opencode.md:33）
-- [ ] 审核发现：报告 B2 行号 sorts/go/merge.go:20-23 指向当前已修复代码，当前 merge 的左半余量回拷在 21-24、右半余量在 25-28；报告中「20-23」为历史缺陷行号，对已修复代码需标注 commit 前行号或改为当前文件行号（docs/review/2026-11-02-code-review-opencode.md:30）
+- [x] 审核发现：报告 B6 行号引用 linkedlist/go/linkedlist.go:105-108 指向 `Reverse()`，实际重复 isEmpty 判断在 `RemoveLast` 的 140-145（死代码在 143-145）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:34），证据报告已改为 141-146 并标 **已修** `0c24336`
+- [x] 审核发现：报告 B10 行号引用 array/go/array.go:32-43 起点错误，`Insert` 实际在 49-55（先判 FullArray 在 50-52，越界判在 53-54）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:38），证据报告已改为 49-55（越界 50-52/满 53-55）并标 **已修** `819c537`
+- [x] 审核发现：报告 B5 行号 graph/go/graph.go:24-37 覆盖 AddEdge 整体（24-36），但 todo.md 对应条目标 31-35；两处行号口径不一致，需统一（docs/review/2026-11-02-code-review-opencode.md:33），证据报告/todo 已统一为 27-40 并标 **已修** `a089271`
+- [x] 审核发现：报告 B2 行号 sorts/go/merge.go:20-23 指向当前已修复代码，当前 merge 的左半余量回拷在 21-24、右半余量在 25-28；报告中「20-23」为历史缺陷行号，对已修复代码需标注 commit 前行号或改为当前文件行号（docs/review/2026-11-02-code-review-opencode.md:30），证据报告已标注历史行号 20-23 + 当前 21-28 并保留 **已修** `9edeae7`
