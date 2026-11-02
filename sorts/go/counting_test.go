@@ -1,6 +1,7 @@
 package sorts
 
 import (
+	"math"
 	"reflect"
 	"sort"
 	"testing"
@@ -27,6 +28,26 @@ func TestCountingSortCorrectness(t *testing.T) {
 		{1},                      // 单元素
 		{},                       // 空
 		{0, -5, 3, -1, 2},        // 含负数
+	}
+	for _, in := range cases {
+		got := append([]int(nil), in...)
+		want := append([]int(nil), in...)
+		CountingSort(got)
+		sort.Ints(want)
+		if !reflect.DeepEqual(got, want) {
+			t.Fatalf("CountingSort(%v) = %v, want %v", in, got, want)
+		}
+	}
+}
+
+// 回归:值域过大(max-min+1 溢出为 0)时旧实现 make([]int,0) 后 count[arr[i]-min] 越界 panic。
+func TestCountingSortOverflowRange(t *testing.T) {
+	cases := [][]int{
+		{math.MinInt, math.MaxInt},
+		{math.MaxInt, math.MinInt},
+		{0, math.MaxInt},
+		{math.MinInt, 0},
+		{math.MinInt, math.MaxInt, 0},
 	}
 	for _, in := range cases {
 		got := append([]int(nil), in...)

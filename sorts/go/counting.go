@@ -1,6 +1,10 @@
 package sorts
 
-import "golang.org/x/exp/constraints"
+import (
+	"sort"
+
+	"golang.org/x/exp/constraints"
+)
 
 func CountingSort[T constraints.Integer](arr []T) {
 	n := len(arr)
@@ -16,6 +20,12 @@ func CountingSort[T constraints.Integer](arr []T) {
 		} else if arr[i] < min {
 			min = arr[i]
 		}
+	}
+
+	// 值域过大时 max-min+1 溢出为 0,无法分配计数数组;退化为比较排序保证正确性
+	if max-min+1 <= 0 {
+		sort.Slice(arr, func(i, j int) bool { return arr[i] < arr[j] })
+		return
 	}
 
 	count := make([]int, max-min+1)
