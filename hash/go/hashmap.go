@@ -104,7 +104,8 @@ func fnv1a(key string) uint32 {
 }
 
 func (this *HashMap) indexOf(key string) int {
-	return int(fnv1a(key) & uint32(len(this.buckets)-1))
+	// 桶数恒为 2 的幂且上限远小于 uint32 最大值,掩码转换无实际溢出;gosec G115 误报
+	return int(fnv1a(key) & uint32(len(this.buckets)-1)) // #nosec G115
 }
 
 func (this *HashMap) resize() {
