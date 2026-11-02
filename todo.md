@@ -21,7 +21,7 @@
 ## 待办
 
 - [x] sorts 冒泡/计数/插入/快排测试补断言（现仅 t.Log 烟测，曾掩盖 MergeSort P0；selection_test.go 为空文件），证据 sorts/go test 全绿 12 测试（含 Correctness 断言）
-- [ ] graph 无向 AddEdge(A,A) 自环向自身邻接表追加两次，EdgeCount 记 1（graph/go/graph.go:31-35，实证 Neighbors(a)=[a a]）
+- [x] graph 无向 AddEdge(A,A) 自环向自身邻接表追加两次，EdgeCount 记 1（graph/go/graph.go:31-35，实证 Neighbors(a)=[a a]），证据 go test graph 全绿 10 测试（TestGraphUndirectedSelfLoop 回归）
 - [ ] linkedlist RemoveLast 冗余 isEmpty 判断（死代码）
 - [ ] queue 补编译期接口守卫（stack 已加，queue 未加）
 - [ ] 说明非线程安全：仅 linkedlist 文档化 RWLock，queue/stack/tree/heap/hash/graph 未声明并发限制

@@ -94,6 +94,21 @@ func TestGraphUndirected(t *testing.T) {
 	}
 }
 
+// 回归:无向 AddEdge(A,A) 曾向自身邻接表追加两次,Neighbors(a)=[a a];自环应只记一次。
+func TestGraphUndirectedSelfLoop(t *testing.T) {
+	g := NewGraph(false)
+	g.AddEdge("a", "a")
+	if g.EdgeCount() != 1 {
+		t.Fatalf("edge count = %d, want 1", g.EdgeCount())
+	}
+	if n := g.Neighbors("a"); !eqSeq(n, []string{"a"}) {
+		t.Fatalf("neighbors of a = %v, want [a]", n)
+	}
+	if !g.HasEdge("a", "a") {
+		t.Fatal("self-loop edge should exist")
+	}
+}
+
 func TestGraphDisconnected(t *testing.T) {
 	g := NewGraph(true)
 	g.AddEdge("a", "b")

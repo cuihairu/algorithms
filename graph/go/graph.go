@@ -30,7 +30,8 @@ func (this *Graph) AddEdge(from, to string) {
 	this.AddVertex(to)
 	this.adj[from] = append(this.adj[from], to)
 	this.edges++
-	if !this.directed {
+	// 无向自环 from==to 时反向追加会重复写入同一邻接表,仅在两端点不同时补反向边
+	if !this.directed && from != to {
 		this.adj[to] = append(this.adj[to], from)
 	}
 }
