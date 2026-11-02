@@ -1,10 +1,14 @@
 package linkedlist
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
 )
+
+// ErrIndexOutOfRange 表示插入/删除索引越界
+var ErrIndexOutOfRange = errors.New("index out of range")
 
 type ListNode struct {
 	next    *ListNode
@@ -166,22 +170,28 @@ func (this *LinkedList) Contains(element any) bool {
 	return false
 }
 
-// 根据index插入元素
-func (this *LinkedList) Insert(index int, element any) {
+// Insert 在 index 位置插入元素,合法区间 [1, size+1](1 为头插,size+1 为尾插),越界返回 ErrIndexOutOfRange
+func (this *LinkedList) Insert(index int, element any) error {
 	this.Lock()
 	defer this.Unlock()
 	if index <= 0 {
-		return
+		return ErrIndexOutOfRange
 	}
 	pre := this.head
-	for i := 1; i < index && pre.next != nil; i++ {
+	i := 1
+	for ; i < index && pre.next != nil; i++ {
 		pre = pre.next
+	}
+	// 推进不足 index-1 步说明 index > size+1,越界而非静默尾插
+	if i < index {
+		return ErrIndexOutOfRange
 	}
 	node := &ListNode{
 		next:    pre.next,
 		element: element,
 	}
 	pre.next = node
+	return nil
 }
 
 // 判断单链表是否有环

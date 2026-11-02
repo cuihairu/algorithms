@@ -122,21 +122,35 @@ func TestLinkedListContains(t *testing.T) {
 
 func TestLinkedListInsert(t *testing.T) {
 	l := newList(1, 3)
-	l.Insert(2, 2) // [1,2,3]
+	if err := l.Insert(2, 2); err != nil { // [1,2,3]
+		t.Fatalf("Insert(2,2) returned error: %v", err)
+	}
 	if !sameSeq(elements(l), 1, 2, 3) {
 		t.Fatalf("elements = %v, want [1 2 3]", elements(l))
 	}
 
 	l2 := newList(1, 2)
-	l2.Insert(0, 9) // index<=0: no-op(现有语义)
+	if err := l2.Insert(0, 9); err != ErrIndexOutOfRange {
+		t.Fatalf("Insert(0,..) want ErrIndexOutOfRange, got %v", err)
+	}
 	if l2.Size() != 2 {
 		t.Fatalf("size after Insert(0,..) = %d, want 2", l2.Size())
 	}
 
 	l3 := newList(1, 2)
-	l3.Insert(3, 3) // index==len: 追加到尾部
+	if err := l3.Insert(3, 3); err != nil { // index==size+1: 追加到尾部
+		t.Fatalf("Insert(size+1) returned error: %v", err)
+	}
 	if l3.Size() != 3 || l3.GetLast() != 3 {
 		t.Fatalf("Insert at len should append, got size=%d last=%v", l3.Size(), l3.GetLast())
+	}
+
+	l4 := newList(1, 2)
+	if err := l4.Insert(5, 9); err != ErrIndexOutOfRange {
+		t.Fatalf("out-of-range Insert want ErrIndexOutOfRange, got %v", err)
+	}
+	if l4.Size() != 2 || l4.GetLast() != 2 {
+		t.Fatalf("out-of-range Insert should not modify list, got size=%d last=%v", l4.Size(), l4.GetLast())
 	}
 }
 
