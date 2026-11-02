@@ -30,7 +30,7 @@
 - [x] linkedlist Insert 对 index>size+1 静默尾插、index<=0 静默返回，无越界反馈（linkedlist/go/linkedlist.go:173-188），证据 go test linkedlist 全绿 11 测试（ErrIndexOutOfRange 回归）
 - [x] ArrayQueue.Enqueue 恒定 append，非空稳态下内存 O(总操作数) 而非 O(当前大小)（queue/go/array.go:27-30），证据 go test queue 全绿 7 测试（TestArrayQueueBoundedMemory 回归，容量有界）
 - [x] docs/demo、docs/guide、docs/slides 为旧 VuePress 模板页（@include 等特性 VitePress 不支持），迁移或删除，证据删除模板页 + config/index 清理 + pnpm run docs:build 成功 45.3s
-- [ ] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client）
+- [x] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client），证据 package.json 仅剩 vue+vitepress，lockfile 无 vuepress 引用，pnpm run docs:build 成功 14.2s
 - [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm）
 
 ## 审核发现
