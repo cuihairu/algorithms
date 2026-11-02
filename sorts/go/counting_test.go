@@ -59,3 +59,35 @@ func TestCountingSortOverflowRange(t *testing.T) {
 		}
 	}
 }
+
+func TestCountingSortOverflowTypedRanges(t *testing.T) {
+	signed := [][]int8{
+		{math.MinInt8, math.MaxInt8},
+		{math.MinInt8, 50},
+		{math.MaxInt8, math.MinInt8},
+	}
+	for _, in := range signed {
+		got := append([]int8(nil), in...)
+		want := append([]int8(nil), in...)
+		CountingSort(got)
+		sort.Slice(want, func(i, j int) bool { return want[i] < want[j] })
+		if !reflect.DeepEqual(got, want) {
+			t.Fatalf("CountingSort(%v) = %v, want %v", in, got, want)
+		}
+	}
+
+	unsigned := [][]uint{
+		{0, math.MaxUint},
+		{math.MaxUint, 0},
+		{1 << 40, 0, math.MaxUint},
+	}
+	for _, in := range unsigned {
+		got := append([]uint(nil), in...)
+		want := append([]uint(nil), in...)
+		CountingSort(got)
+		sort.Slice(want, func(i, j int) bool { return want[i] < want[j] })
+		if !reflect.DeepEqual(got, want) {
+			t.Fatalf("CountingSort(%v) = %v, want %v", in, got, want)
+		}
+	}
+}
