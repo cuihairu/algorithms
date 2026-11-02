@@ -47,11 +47,11 @@ func (a *Array[T]) Find(index uint) (T, error) {
 
 // 插入值到索引index上,合法区间 [0, len](等于 len 即尾插)
 func (a *Array[T]) Insert(index uint, v T) error {
-	if a.Len() == a.Cap() {
-		return FullArray
-	}
 	if index > a.Len() {
 		return OutOfRange
+	}
+	if a.Len() == a.Cap() {
+		return FullArray
 	}
 	for i := a.len; i > index; i-- {
 		a.data[i] = a.data[i-1]

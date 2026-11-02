@@ -96,3 +96,17 @@ func TestOutOfRangeOnLogicalLength(t *testing.T) {
 		t.Fatalf("after tail insert want [1,2,99] len 3, got %s len %d", a.String(), a.Len())
 	}
 }
+
+// 回归:满数组越界插入应返回 OutOfRange 而非 FullArray
+func TestFullArrayOutOfRangeInsert(t *testing.T) {
+	a := NewArray[int](2)
+	a.Append(1)
+	a.Append(2) // 满
+
+	if err := a.Insert(5, 9); err != OutOfRange {
+		t.Fatalf("full array out-of-range insert want OutOfRange, got %v", err)
+	}
+	if err := a.Append(3); err != FullArray {
+		t.Fatalf("full array in-range insert want FullArray, got %v", err)
+	}
+}
