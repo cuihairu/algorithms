@@ -39,3 +39,11 @@
 - [x] 审核发现：报告 B10 行号引用 array/go/array.go:32-43 起点错误，`Insert` 实际在 49-55（先判 FullArray 在 50-52，越界判在 53-54）；行号需修正（docs/review/2026-11-02-code-review-opencode.md:38），证据报告已改为 49-55（越界 50-52/满 53-55）并标 **已修** `819c537`
 - [x] 审核发现：报告 B5 行号 graph/go/graph.go:24-37 覆盖 AddEdge 整体（24-36），但 todo.md 对应条目标 31-35；两处行号口径不一致，需统一（docs/review/2026-11-02-code-review-opencode.md:33），证据报告/todo 已统一为 27-40 并标 **已修** `a089271`
 - [x] 审核发现：报告 B2 行号 sorts/go/merge.go:20-23 指向当前已修复代码，当前 merge 的左半余量回拷在 21-24、右半余量在 25-28；报告中「20-23」为历史缺陷行号，对已修复代码需标注 commit 前行号或改为当前文件行号（docs/review/2026-11-02-code-review-opencode.md:30），证据报告已标注历史行号 20-23 + 当前 21-28 并保留 **已修** `9edeae7`
+
+> 独立审核（3eed44c361d6..HEAD，2026-11-02）：逐文件复核该区间 16 个提交（Go 修复+测试、docs 站迁移/依赖清理、go.work/lock），9 模块 `go test ./...` 与 `linkedlist/queue -race` 复跑全绿；代码侧未见新的越界/泄漏/竞态/注入/反序列化缺陷，发现集中在文档漂移与测试缺口。
+
+- [ ] 审核发现：`LinkedList.Insert` 返回 `error` 为破坏性公开 API 变更，但 docs/zh/notes/linkedlist.md:26 与 docs/notes/linkedlist.md:26 仍写「index<=0 不动作；越界等价尾插」，与 `321c223` 后行为（越界返回 ErrIndexOutOfRange、`index<=0` 同样报错）矛盾且未记载新返回类型，违反验收口径「README/docs 与源码一致」（linkedlist/go/linkedlist.go:174）
+- [ ] 审核发现：`ArrayQueue.Enqueue` 压实修复后，docs/zh/notes/queue.md:39 与 docs/notes/queue.md:39 仍称「非空期间底层切片随 Enqueue 持续增长（只在清空时回收）」，与 `7777716` 的 `head>=len/2` 前移压实（内存有界）矛盾，笔记陈旧（queue/go/array.go:35-39）
+- [ ] 审核发现：TestArrayQueueBoundedMemory 仅断言 `Size()` 与 `cap`，未断言压实后出队元素仍保持 FIFO 顺序，若压实逻辑错位（丢元素/乱序）测试无法捕获（queue/go/array_test.go:96-111）
+- [ ] 审核发现：TestLinkedListInsert 未覆盖 `index==1` 头插与空链表合法插入（`size+1==1`）边界，越界/合法边界覆盖不完整（linkedlist/go/linkedlist_test.go:123-156）
+- [ ] 审核发现：新增排序 Correctness 用例值域过小，未覆盖 `CountingSort` 在 `{math.MinInt, math.MaxInt}` 时 `max-min+1` 溢出为 0、`count[arr[i]-min]` 越界 panic 的风险（实现未改，但新测试面向该函数）（sorts/go/counting_test.go:18-40）
