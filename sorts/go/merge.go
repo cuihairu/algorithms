@@ -12,6 +12,7 @@ func merge[T constraints.Ordered](array []T, start int, mid int, end int) {
 	for ; i <= mid && j <= end; k++ {
 		if array[i] <= array[j] {
 			tmpArr[k] = array[i]
+			i++
 		} else {
 			tmpArr[k] = array[j]
 			j++
@@ -19,6 +20,10 @@ func merge[T constraints.Ordered](array []T, start int, mid int, end int) {
 	}
 	for ; i <= mid; i++ {
 		tmpArr[k] = array[i]
+		k++
+	}
+	for ; j <= end; j++ {
+		tmpArr[k] = array[j]
 		k++
 	}
 	copy(array[start:end+1], tmpArr)
