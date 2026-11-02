@@ -140,9 +140,6 @@ func (this *LinkedList) RemoveLast() any {
 	if this.isEmpty() {
 		return nil
 	}
-	if this.isEmpty() {
-		return nil
-	}
 	tmp := this.head
 	for tmp.next != nil && tmp.next.next != nil {
 		tmp = tmp.next
