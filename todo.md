@@ -44,6 +44,6 @@
 
 - [x] 审核发现：`LinkedList.Insert` 返回 `error` 为破坏性公开 API 变更，但 docs/zh/notes/linkedlist.md:26 与 docs/notes/linkedlist.md:26 仍写「index<=0 不动作；越界等价尾插」，与 `321c223` 后行为（越界返回 ErrIndexOutOfRange、`index<=0` 同样报错）矛盾且未记载新返回类型，违反验收口径「README/docs 与源码一致」（linkedlist/go/linkedlist.go:174），证据 docs/notes/linkedlist.md:26 与 docs/zh/notes/linkedlist.md:26 已改为合法区间 `[1,size+1]` + 返回 error/越界 ErrIndexOutOfRange
 - [x] 审核发现：`ArrayQueue.Enqueue` 压实修复后，docs/zh/notes/queue.md:39 与 docs/notes/queue.md:39 仍称「非空期间底层切片随 Enqueue 持续增长（只在清空时回收）」，与 `7777716` 的 `head>=len/2` 前移压实（内存有界）矛盾，笔记陈旧（queue/go/array.go:35-39），证据 docs/notes/queue.md:39 与 docs/zh/notes/queue.md:39 已改为「已消费至少一半时前移压实，内存有界」
-- [ ] 审核发现：TestArrayQueueBoundedMemory 仅断言 `Size()` 与 `cap`，未断言压实后出队元素仍保持 FIFO 顺序，若压实逻辑错位（丢元素/乱序）测试无法捕获（queue/go/array_test.go:96-111）
+- [x] 审核发现：TestArrayQueueBoundedMemory 仅断言 `Size()` 与 `cap`，未断言压实后出队元素仍保持 FIFO 顺序，若压实逻辑错位（丢元素/乱序）测试无法捕获（queue/go/array_test.go:96-111），证据 queue/go/array_test.go:112-120 已断言稳态末尾 16 元素 FIFO 顺序（9984..9999），queue go test 全绿
 - [ ] 审核发现：TestLinkedListInsert 未覆盖 `index==1` 头插与空链表合法插入（`size+1==1`）边界，越界/合法边界覆盖不完整（linkedlist/go/linkedlist_test.go:123-156）
 - [ ] 审核发现：新增排序 Correctness 用例值域过小，未覆盖 `CountingSort` 在 `{math.MinInt, math.MaxInt}` 时 `max-min+1` 溢出为 0、`count[arr[i]-min]` 越界 panic 的风险（实现未改，但新测试面向该函数）（sorts/go/counting_test.go:18-40）

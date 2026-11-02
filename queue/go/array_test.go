@@ -109,4 +109,12 @@ func TestArrayQueueBoundedMemory(t *testing.T) {
 	if q.Size() != 16 {
 		t.Fatalf("size = %d, want 16", q.Size())
 	}
+	// 压实后出队仍应保持 FIFO 顺序且元素完整;稳态末尾 16 个元素为 9984..9999
+	for i := 0; i < 16; i++ {
+		v, _ := q.Dequeue().(int)
+		want := 9984 + i
+		if v != want {
+			t.Fatalf("dequeue #%d = %d, want %d (FIFO order broken after compaction)", i, v, want)
+		}
+	}
 }
