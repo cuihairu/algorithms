@@ -33,10 +33,10 @@ Constructors: `NewArrayQueue()` and `NewLinkedListQueue()`.
 
 | Implementation | Structure | Notes |
 | --- | --- | --- |
-| `ArrayQueue` | slice + `head` front cursor | `Dequeue` only moves the cursor, never clears elements; the underlying slice is reclaimed and the cursor reset **only when the queue is emptied**; `String()` outputs `[a<b<c]` (front → tail) |
+| `ArrayQueue` | slice + `head` front cursor | `Dequeue` only moves the cursor, never clears elements; the underlying slice is compacted forward when at least half is consumed, and is reclaimed plus the cursor reset **when the queue is emptied**; `String()` outputs `[a<b<c]` (front → tail) |
 | `LinkedListQueue` | singly linked list with head/tail pointers | enqueue via tail, dequeue via head, tail maintained automatically |
 
-Both implementations return `nil` for `Dequeue`/`Front` on an empty queue, no panic. Note that while the `ArrayQueue` is not empty, its underlying slice keeps growing with `Enqueue` (it is reclaimed only when emptied).
+Both implementations return `nil` for `Dequeue`/`Front` on an empty queue, no panic. While the `ArrayQueue` is not empty, `Enqueue` compacts the backing slice forward once at least half has been consumed, keeping memory bounded.
 
 ## Complexity
 
