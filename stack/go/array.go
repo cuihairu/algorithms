@@ -1,3 +1,6 @@
+// Package stack 提供栈数据结构。
+//
+// 非线程安全:ArrayStack/LinkedListStack 不含同步机制,并发访问需调用方自行加锁。
 package stack
 
 import (

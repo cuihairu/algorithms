@@ -1,3 +1,6 @@
+// Package queue 提供队列数据结构。
+//
+// 非线程安全:ArrayQueue/LinkedListQueue 不含同步机制,并发访问需调用方自行加锁。
 package queue
 
 import (

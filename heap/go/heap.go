@@ -1,3 +1,6 @@
+// Package heap 提供最小堆数据结构。
+//
+// 非线程安全:Heap 不含同步机制,并发访问需调用方自行加锁。
 package heap
 
 import (

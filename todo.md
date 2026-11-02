@@ -24,7 +24,7 @@
 - [x] graph 无向 AddEdge(A,A) 自环向自身邻接表追加两次，EdgeCount 记 1（graph/go/graph.go:31-35，实证 Neighbors(a)=[a a]），证据 go test graph 全绿 10 测试（TestGraphUndirectedSelfLoop 回归）
 - [x] linkedlist RemoveLast 冗余 isEmpty 判断（死代码），证据 go test linkedlist 全绿 11 测试
 - [x] queue 补编译期接口守卫（stack 已加，queue 未加），证据 go test queue 全绿 6 测试
-- [ ] 说明非线程安全：仅 linkedlist 文档化 RWLock，queue/stack/tree/heap/hash/graph 未声明并发限制
+- [x] 说明非线程安全：仅 linkedlist 文档化 RWLock，queue/stack/tree/heap/hash/graph 未声明并发限制，证据 stack/queue/tree/heap/hash/graph 6 模块包注释已声明 + 全绿
 - [ ] hash 桶掩码整数转换 gosec G115 告警（hash/go/hashmap.go:104；桶数恒为 2 的幂无实际溢出，误报，加注释或忽略标记）
 - [ ] array Insert 先判 FullArray 后判越界：满数组越界插入返回 full array 而非 out of range（array/go/array.go:50-53）
 - [ ] linkedlist Insert 对 index>size+1 静默尾插、index<=0 静默返回，无越界反馈（linkedlist/go/linkedlist.go:173-188）

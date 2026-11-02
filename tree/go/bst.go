@@ -1,3 +1,6 @@
+// Package tree 提供二叉搜索树数据结构。
+//
+// 非线程安全:BST 不含同步机制,并发访问需调用方自行加锁。
 package tree
 
 import (
