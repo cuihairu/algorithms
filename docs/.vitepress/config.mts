@@ -28,38 +28,10 @@ const zhNotes = [
 
 const enSidebar = {
   '/notes/': [{ text: 'Notes', items: notes }],
-  '/guide/': [{ text: 'Guide', items: [
-    { text: 'Overview', link: '/guide/' },
-    { text: 'Bar', link: '/guide/bar/' },
-    { text: 'Baz', link: '/guide/bar/baz' },
-    { text: 'Foo', link: '/guide/foo/' },
-    { text: 'Ray', link: '/guide/foo/ray' },
-  ] }],
-  '/demo/': [{ text: 'Demos', items: [
-    { text: 'Overview', link: '/demo/' },
-    { text: 'Markdown', link: '/demo/markdown' },
-    { text: 'Page', link: '/demo/page' },
-    { text: 'Disable', link: '/demo/disable' },
-    { text: 'Encrypt', link: '/demo/encrypt' },
-  ] }],
 }
 
 const zhSidebar = {
   '/zh/notes/': [{ text: '笔记', items: zhNotes }],
-  '/zh/guide/': [{ text: '指南', items: [
-    { text: '总览', link: '/zh/guide/' },
-    { text: 'Bar', link: '/zh/guide/bar/' },
-    { text: 'Baz', link: '/zh/guide/bar/baz' },
-    { text: 'Foo', link: '/zh/guide/foo/' },
-    { text: 'Ray', link: '/zh/guide/foo/ray' },
-  ] }],
-  '/zh/demo/': [{ text: '演示', items: [
-    { text: '总览', link: '/zh/demo/' },
-    { text: 'Markdown 展示', link: '/zh/demo/markdown' },
-    { text: '页面展示', link: '/zh/demo/page' },
-    { text: '禁用展示', link: '/zh/demo/disable' },
-    { text: '加密展示', link: '/zh/demo/encrypt' },
-  ] }],
 }
 
 export default defineConfig({
@@ -83,8 +55,6 @@ export default defineConfig({
         nav: [
           { text: 'Home', link: '/' },
           { text: 'Notes', link: '/notes/', activeMatch: '/notes/' },
-          { text: 'Guide', link: '/guide/', activeMatch: '/guide/' },
-          { text: 'Demos', link: '/demo/', activeMatch: '/demo/' },
         ],
         sidebar: enSidebar,
         outline: { level: [2, 3] },
@@ -101,8 +71,6 @@ export default defineConfig({
         nav: [
           { text: '首页', link: '/zh/' },
           { text: '笔记', link: '/zh/notes/', activeMatch: '/zh/notes/' },
-          { text: '指南', link: '/zh/guide/', activeMatch: '/zh/guide/' },
-          { text: '演示', link: '/zh/demo/', activeMatch: '/zh/demo/' },
         ],
         sidebar: zhSidebar,
         outline: { level: [2, 3], label: '本页目录' },

@@ -41,4 +41,3 @@ features:
 | [哈希表](/zh/notes/hash) | `hash/go` | 链地址 + FNV-1a + 负载因子倍增扩容 |
 | [图](/zh/notes/graph) | `graph/go` | 邻接表有向/无向图 + BFS/DFS/最短路 |
 
-站点约定见[指南](/zh/guide/)与[组件演示](/zh/demo/)。

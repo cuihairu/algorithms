@@ -41,4 +41,3 @@ features:
 | [Hash Map](/notes/hash) | `hash/go` | chaining + FNV-1a + load-factor doubling resize |
 | [Graph](/notes/graph) | `graph/go` | adjacency-list directed/undirected graph + BFS / DFS / shortest path |
 
-See the [guide](/guide/) and [component demos](/demo/) for the site conventions inherited from the original template.
