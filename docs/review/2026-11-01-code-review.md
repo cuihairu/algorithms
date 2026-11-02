@@ -27,7 +27,7 @@ title: 代码深审报告（2026-11-01）
 | B2 | P0 | sorts/go/merge.go:20-23 | 缺右半段余量回拷循环：左半先耗尽时尾部零值被写回 | `MergeSort([1,2,3,4,5])` → `[1,0,0,0,0]`（实证） | **已修** `9edeae7` |
 | B3 | P1 | array/go/array.go:36-40 | `isIndexOutOfRange` 用 `Cap()` 而非 `Len()`：`[len,cap)` 区间被当作合法 | `Find(5)` 零值无错；`Insert(6,99)` 产出 `[1,2,0]` 空洞；`Pop(5)` 无中生有减 Len（实证） | **已修** `0c4cabd` |
 | B4 | P2 | sorts/go/*_test.go | 冒泡/计数/插入/快排测试仅 `t.Log` 无断言（selection_test.go 空文件），烟测掩盖了 B1/B2 | 仅 `bucket_test.go` 有 `IntsAreSorted` 断言 | 记 todo |
-| B5 | P2 | graph/go/graph.go:39-47 | 无向 `AddEdge(A,A)` 自环向 `adj[A]` 追加两次（`EdgeCount` 记 1） | `AddEdge` 无向分支无条件 append | 记 todo |
+| B5 | P2 | graph/go/graph.go:31-35 | 无向 `AddEdge(A,A)` 自环向 `adj[A]` 追加两次（`EdgeCount` 记 1） | 实证 `Neighbors(a)=[a a]`、`EdgeCount()=1`；`AddEdge` 无向分支（line 34）无条件 append | 记 todo |
 | B6 | P3 | linkedlist/go/linkedlist.go:105-108 | `RemoveLast` 重复 `isEmpty` 判断（死代码） | 连续两次 `if this.isEmpty()` | 记 todo |
 | B7 | P3 | queue/go/array.go、queue/go/linkedlist.go | `Queue` 接口无编译期守卫 `var _ Queue`（stack 已有） | grep 无 `var _ Queue` | 记 todo |
 | B8 | P3 | queue/stack/tree/heap/hash/graph | 仅 linkedlist 文档化 RWLock，其余未声明非并发安全 | 各结构无锁 | 记 todo |
