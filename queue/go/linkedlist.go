@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+// 编译期接口守卫:LinkedListQueue 必须实现 Queue
+var _ Queue = (*LinkedListQueue)(nil)
+
 type node struct {
 	next    *node
 	element any

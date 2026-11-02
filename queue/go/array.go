@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+// 编译期接口守卫:ArrayQueue 必须实现 Queue
+var _ Queue = (*ArrayQueue)(nil)
+
 type ArrayQueue struct {
 	data []any
 	head int // 队首游标
