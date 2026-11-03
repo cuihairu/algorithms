@@ -93,6 +93,15 @@ func TestCountingSortOverflowTypedRanges(t *testing.T) {
 }
 
 func TestCountingSortRangeThresholds(t *testing.T) {
+	// 边界分支选择：计数/退化两路径输出恒等，必须直接断言谓词方可捕获
+	// span >= maxCountingRange 若回归为 > 的 off-by-one 或阈值翻转。
+	if countingRangeFits(maxCountingRange-1) != true {
+		t.Fatalf("countingRangeFits(%d) = false, want true (计数最大跨度边界)", maxCountingRange-1)
+	}
+	if countingRangeFits(maxCountingRange) != false {
+		t.Fatalf("countingRangeFits(%d) = true, want false (首次退化边界)", maxCountingRange)
+	}
+
 	cases := [][]int{
 		{maxCountingRange - 1, 0},
 		{maxCountingRange, 0},
