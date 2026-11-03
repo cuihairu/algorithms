@@ -94,8 +94,8 @@ func TestCountingSortOverflowTypedRanges(t *testing.T) {
 
 func TestCountingSortRangeThresholds(t *testing.T) {
 	cases := [][]int{
-		{1<<20 - 1, 0},
-		{1 << 20, 0},
+		{maxCountingRange - 1, 0},
+		{maxCountingRange, 0},
 	}
 	for _, in := range cases {
 		got := append([]int(nil), in...)

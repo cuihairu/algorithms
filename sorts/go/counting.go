@@ -6,6 +6,8 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+const maxCountingRange = 1 << 20
+
 func CountingSort[T constraints.Integer](arr []T) {
 	n := len(arr)
 	if n <= 1 {
@@ -24,7 +26,6 @@ func CountingSort[T constraints.Integer](arr []T) {
 
 	// 值域超过阈值时退化为稳定比较排序,避免 make 分配数 TB 级计数数组导致 OOM/挂起;
 	// 同时规避窄整型 max-min+1 提前回绕为 0 的性能降级。
-	const maxCountingRange = 1 << 20
 	span := uint64(max) - uint64(min)
 	if span >= maxCountingRange {
 		sort.SliceStable(arr, func(i, j int) bool { return arr[i] < arr[j] })
