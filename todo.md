@@ -31,7 +31,7 @@
 - [x] ArrayQueue.Enqueue 恒定 append，非空稳态下内存 O(总操作数) 而非 O(当前大小)（queue/go/array.go:27-30），证据 go test queue 全绿 7 测试（TestArrayQueueBoundedMemory 回归，容量有界）
 - [x] docs/demo、docs/guide、docs/slides 为旧 VuePress 模板页（@include 等特性 VitePress 不支持），迁移或删除，证据删除模板页 + config/index 清理 + pnpm run docs:build 成功 45.3s
 - [x] 清理旧 VuePress 依赖（vuepress/vuepress-theme-hope/@vuepress/client），证据 package.json 仅剩 vue+vitepress，lockfile 无 vuepress 引用，pnpm run docs:build 成功 14.2s
-- [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm） — BLOCKED：缺用户决策（公开仓库或升级付费套餐），workflow 已就绪，无法在本环境验证。证据 2026-11-03 复核：gh api repos/cuihairu/algorithms → isPrivate=true；POST /pages → 422 "current plan does not support GitHub Pages"；.github/workflows/deploy-docs.yml 已就绪（VitePress + pnpm）。2026-11-04 复核：仓库仍为 private，外部条件未变
+- [ ] 启用 GitHub Pages 并验证徽章可达：仓库私有 + Free 套餐不支持（422），Actions 未产生部署 run，需公开仓库或升级套餐（部署 workflow 已改为 VitePress + pnpm） — BLOCKED：缺用户决策（公开仓库或升级付费套餐），workflow 已就绪，无法在本环境验证。证据 2026-11-03 复核：gh api repos/cuihairu/algorithms → isPrivate=true；POST /pages → 422 "current plan does not support GitHub Pages"；.github/workflows/deploy-docs.yml 已就绪（VitePress + pnpm）。2026-11-04 复核（当日新验证，实测）：gh api repos/cuihairu/algorithms → {private:true, has_pages:false}；POST /pages → HTTP 422 "Your current plan does not support GitHub Pages for this repository."；外部条件未变，仍 BLOCKED 缺用户决策
 
 ## 审核发现
 
@@ -65,3 +65,5 @@
 - [x] 审核发现：TestCountingSortRangeThresholds 硬编码阈值 `1<<20`/`1<<20-1`（sorts/go/counting_test.go:97-98）而非引用实现常量 `maxCountingRange`（sorts/go/counting.go:27）；若该阈值将来改动，两用例将同落计数路径、「首次退化」边界静默失去覆盖，新阈值 off-by-one 回归无法捕获，属测试-实现耦合脆弱性（次要测试缺口），证据 `maxCountingRange` 提升为包级常量（sorts/go/counting.go:9）并由边界用例引用（sorts/go/counting_test.go:96-98），sorts go test + GOARCH=386 go test + go test -race 全绿
 
 - [x] 审核发现：TestCountingSortRangeThresholds 仅断言排序输出正确，未断言实际走计数还是退化路径；对 `{maxCountingRange-1,0}`（计数）与 `{maxCountingRange,0}`（退化），两路径输出恒等，故 `span >= maxCountingRange` 若回归为 `>`（off-by-one 或阈值翻转）测试仍绿，边界分支选择无法被捕获（sorts/go/counting_test.go:95-108，边界判断 sorts/go/counting.go:30）；属次要测试缺口——本提交仅把硬编码阈值改为引用常量（正确且必要），未引入也未消除该局限，证据 `countingRangeFits` 提取为独立谓词（sorts/go/counting.go:11-15）并由 `TestCountingSortRangeThresholds` 直接断言两边界（sorts/go/counting_test.go:96-101，`maxCountingRange-1`→true / `maxCountingRange`→false），sorts go test -race + GOARCH=386 go test + go vet 全绿
+
+- [x] 审核发现：新增「2026-11-04 复核：仓库仍为 private，外部条件未变」仅重述 2026-11-03 旧证据（gh api→isPrivate=true、POST /pages→422），未附 2026-11-04 当日新验证输出，故「仓库仍为 private，外部条件未变」属无独立证据的断言，与台账其余条目「逐项附证据」的口径不一致（todo.md:34）——属实，已修；其中「本环境 gh auth status 报 token invalid，无法复跑该复核」断言不属实：本环境实测 `gh auth status` 成功（token gho_* 有效，scopes 含 repo，账户 cuihairu）。证据 2026-11-04 当日新验证：gh api repos/cuihairu/algorithms → {private:true, has_pages:false}；POST /pages → HTTP 422 "Your current plan does not support GitHub Pages for this repository."；外部条件未变，待办项仍 BLOCKED
