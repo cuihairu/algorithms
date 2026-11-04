@@ -68,4 +68,4 @@
 
 - [x] 审核发现：新增「2026-11-04 复核：仓库仍为 private，外部条件未变」仅重述 2026-11-03 旧证据（gh api→isPrivate=true、POST /pages→422），未附 2026-11-04 当日新验证输出，故「仓库仍为 private，外部条件未变」属无独立证据的断言，与台账其余条目「逐项附证据」的口径不一致（todo.md:34）——属实，已修；其中「本环境 gh auth status 报 token invalid，无法复跑该复核」断言不属实：本环境实测 `gh auth status` 成功（token gho_* 有效，scopes 含 repo，账户 cuihairu）。证据 2026-11-04 当日新验证：gh api repos/cuihairu/algorithms → {private:true, has_pages:false}；POST /pages → HTTP 422 "Your current plan does not support GitHub Pages for this repository."；外部条件未变，待办项仍 BLOCKED
 
-- 不属实：本环境实测 `gh auth status` 成功（token gho_* 有效，scopes 含 repo，账户 cuihairu），且 `gh api repos/cuihairu/algorithms` 成功返回 `{private:true, has_pages:false}`，与所称「token invalid / API 调用失败」相反，证据可复现，故该审核发现不属实。
+- [x] 审核发现：新增行「- 不属实：本环境实测 gh auth status 成功…」与上一行（todo.md:69）已载明的同一反驳内容重复，且未采用台账统一格式「- [x] 审核发现：」（无勾选框/无「审核发现：」前缀），属冗余重述与格式口径不一致（todo.md:71）——属实，已修，证据 删除 todo.md:71 冗余「不属实：…」行（第 69 行已载明同一反驳内容），无重复、格式统一
