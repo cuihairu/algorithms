@@ -38,7 +38,7 @@ export default defineConfig({
   lang: 'en-US',
   title: 'Algorithm Notes',
   description: 'Data structures and algorithms in Go',
-  base: '/',
+  base: '/algorithms/',
   lastUpdated: true,
   ignoreDeadLinks: true,
   themeConfig: {
